@@ -1,0 +1,19 @@
+CREATE TABLE meals (
+  name 			VARCHAR(60),
+  ingredients 	VARCHAR(40)[],
+  price 		INTEGER,
+  serving 		VARCHAR(200),
+  course 		VARCHAR(60),
+  alternatives 	VARCHAR(60)[],
+  meal_matches 	VARCHAR(60)[],
+  drink_matches VARCHAR(60)[]
+);
+CREATE TABLE drinks (
+  name 			VARCHAR(60),
+  ingredients 	VARCHAR(40)[],
+  price 		INTEGER,
+  serving 		VARCHAR(200),
+  volume 		INTEGER,
+  alternatives 	VARCHAR(60)[],
+  meal_matches 	VARCHAR(60)[]
+);
