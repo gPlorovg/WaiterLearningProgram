@@ -2,6 +2,7 @@ CREATE TABLE users (
   id                    BIGINT,
   name                  VARCHAR(30),
   password              VARCHAR(30),
+  email                 VARCHAR(60),
   drinks_mistakes       INTEGER[],
   meal_mistakes         INTEGER[],
   cocktails_mistakes    INTEGER[]
