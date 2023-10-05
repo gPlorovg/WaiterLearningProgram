@@ -51,18 +51,18 @@ def main():
 
 
 @app.get("/bar")
-def bar():
-    return render_template("bar.html")
-
-
 @app.get("/cocktails")
-def cocktails():
-    return render_template("cocktails.html")
-
-
 @app.get("/menu")
-def menu():
-    return render_template("menu.html")
+def task_list():
+    names = list()
+    if request.path == "/bar":
+        names = ["guess_serving", "match_price_and_volume", "match_serving"]
+    elif request.path == "/cocktails":
+        names = ["guess_ingredients", "match_price_and_volume"]
+    elif request.path == "/menu":
+        names = ["guess_serving", "match_price", "match_serving", "match_description"]
+
+    return render_template("task_list.html", title=request.path.lstrip("/"), names=names)
 
 
 @app.get("/error")
