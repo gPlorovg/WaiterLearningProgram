@@ -12,19 +12,20 @@ CREATE TABLE meals (
   section               VARCHAR(60),
   price 		        INTEGER,
   serving 		        VARCHAR(200),
-  description 	        VARCHAR(300),
+  description 	        VARCHAR(400),
 );
 CREATE TABLE drinks (
   id                    BIGINT,
-  name 			        VARCHAR(60),
+  name 			        VARCHAR(130),
   section               VARCHAR(60),
   price 		        INTEGER,
-  serving 		        VARCHAR(200),
+  serving 		        VARCHAR(300),
   volume 		        VARCHAR(20)
 );
 CREATE TABLE cocktails (
   id                    BIGINT,
   name 			        VARCHAR(60),
+  section               VARCHAR(60),
   price 		        INTEGER,
   serving 		        VARCHAR(200),
   ingredients 	        VARCHAR(40)[],

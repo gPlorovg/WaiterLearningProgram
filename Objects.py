@@ -2,13 +2,14 @@ from sys import maxsize
 from dataclasses import dataclass, fields
 
 
+# Objects must have same order of fields like order in db table!
 @dataclass
 class Recipe:
+    id: int = 0
     name: str = None
     section: str = None
     price: int = 0
     serving: str = None
-    id: int = 0
 
     def trans_to_iterable(self) -> list:
         resp = list()
@@ -33,5 +34,5 @@ class Drink(Recipe):
 @dataclass
 class Cocktail(Recipe):
     ingredients: list[str] = None
-    image_path: str = None
     volume: str = None
+    image_path: str = None

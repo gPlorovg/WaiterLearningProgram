@@ -1,6 +1,6 @@
 from sys import exc_info
 import psycopg2 as pg
-from Objects import Meal, Drink
+from Objects import Meal, Drink, Cocktail
 
 
 def error_print(err) -> None:
@@ -29,8 +29,9 @@ class DataBase:
         else:
             print("Successful connected.")
             self.cursor = self.connection.cursor()
-            self.all_meals = self.read_all_meals()
-            self.all_drinks = self.read_all_drinks()
+            self.all_meals_id = self.read_all_meals_id()
+            self.all_drinks_id = self.read_all_drinks_id()
+            self.all_cocktails_id = self.read_all_cocktails_id()
 
     def create_meal(self, meal: Meal) -> None:
         if self.connection:
@@ -42,12 +43,10 @@ class DataBase:
                     %s,
                     %s,
                     %s,
-                    %s,
-                    %s,
                     %s
                     );
                 """, meal.trans_to_iterable())
-                self.all_meals += meal.name
+                self.all_meals_id.append(meal.id)
             except pg.ProgrammingError as e:
                 error_print(e)
                 self.connection.rollback()
@@ -64,23 +63,44 @@ class DataBase:
                     %s,
                     %s,
                     %s,
-                    %s,
                     %s
                     );
                 """, drink.trans_to_iterable())
-                self.all_drinks += drink.name
+                self.all_drinks_id.append(drink.id)
             except pg.ProgrammingError as e:
                 error_print(e)
                 self.connection.rollback()
         else:
             print("Data Base doesn't connected")
 
-    def read_meal(self, name: str) -> Meal or None:
+    def create_cocktail(self, cocktail: Cocktail) -> None:
         if self.connection:
             try:
                 self.cursor.execute("""
-                    SELECT * FROM meals WHERE meals.name = %(name)s;
-                """, {"name": name})
+                    INSERT INTO cocktails VALUES (
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s
+                    );
+                """, cocktail.trans_to_iterable())
+                self.all_cocktails_id.append(cocktail.id)
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+        else:
+            print("Data Base doesn't connected")
+
+    def read_meal(self, id_: int) -> Meal or None:
+        if self.connection:
+            try:
+                self.cursor.execute("""
+                    SELECT * FROM meals WHERE meals.id = %(id)s;
+                """, {"id": id_})
                 meal = Meal(*self.cursor.fetchone())
             except pg.ProgrammingError as e:
                 error_print(e)
@@ -92,12 +112,12 @@ class DataBase:
             print("Data Base doesn't connected")
             return None
 
-    def read_drink(self, name: str) -> Drink or None:
+    def read_drink(self, id_: int) -> Drink or None:
         if self.connection:
             try:
                 self.cursor.execute("""
-                    SELECT * FROM drinks WHERE drinks.name = %(name)s;
-                """, {"name": name})
+                    SELECT * FROM drinks WHERE drinks.id = %(id)s;
+                """, {"id": id_})
                 drink = Drink(*self.cursor.fetchone())
             except pg.ProgrammingError as e:
                 error_print(e)
@@ -109,11 +129,28 @@ class DataBase:
             print("Data Base doesn't connected")
             return None
 
-    def read_all_meals(self) -> list[str] or None:
+    def read_cocktail(self, id_: int) -> Cocktail or None:
         if self.connection:
             try:
                 self.cursor.execute("""
-                    SELECT name FROM meals;
+                    SELECT * FROM cocktails WHERE cocktails.id = %(id)s;
+                """, {"id": id_})
+                cocktail = Cocktail(*self.cursor.fetchone())
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+                return None
+            else:
+                return cocktail
+        else:
+            print("Data Base doesn't connected")
+            return None
+
+    def read_all_meals_id(self) -> list[int] or None:
+        if self.connection:
+            try:
+                self.cursor.execute("""
+                    SELECT id FROM meals;
                 """)
             except pg.ProgrammingError as e:
                 error_print(e)
@@ -125,11 +162,27 @@ class DataBase:
             print("Data Base doesn't connected")
             return None
 
-    def read_all_drinks(self) -> list[str] or None:
+    def read_all_drinks_id(self) -> list[int] or None:
         if self.connection:
             try:
                 self.cursor.execute("""
-                    SELECT name FROM drinks;
+                    SELECT id FROM drinks;
+                """)
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+                return None
+            else:
+                return [i[0] for i in self.cursor.fetchall()]
+        else:
+            print("Data Base doesn't connected")
+            return None
+
+    def read_all_cocktails_id(self) -> list[int] or None:
+        if self.connection:
+            try:
+                self.cursor.execute("""
+                    SELECT id FROM cocktails;
                 """)
             except pg.ProgrammingError as e:
                 error_print(e)
