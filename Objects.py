@@ -36,3 +36,19 @@ class Cocktail(Recipe):
     ingredients: list[str] = None
     volume: str = None
     image_path: str = None
+
+
+@dataclass
+class User:
+    email: str = None
+    name: str = None
+    password: str = None
+    drinks_mistakes: list[int] = None
+    meal_mistakes: list[int] = None
+    cocktails_mistakes: list[int] = None
+
+    def trans_to_iterable(self) -> list:
+        resp = list()
+        for f in fields(self):
+            resp.append(getattr(self, f.name))
+        return resp

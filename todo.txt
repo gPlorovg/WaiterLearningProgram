@@ -1,0 +1,26 @@
+auth
+cocktails exam
+cocktails mistakes
+cocktails guess price
+
+create games(
+    exam
+    work on mistakes
+    guess price
+    drinks (
+        guess serving
+        match price and volume
+        match serving
+    )
+    cocktails (
+        guess ingredients
+        match price and volume
+    )
+    meals (
+        guess serving
+        match price
+        match serving
+        match description
+    )
+)
+create user interface

@@ -1,6 +1,6 @@
 from sys import exc_info
 import psycopg2 as pg
-from Objects import Meal, Drink, Cocktail
+from Objects import Meal, Drink, Cocktail, User
 
 
 def error_print(err) -> None:
@@ -193,6 +193,101 @@ class DataBase:
         else:
             print("Data Base doesn't connected")
             return None
+
+    def create_user(self, user: User) -> tuple:
+        if self.connection:
+            try:
+                self.cursor.execute("""
+                    INSERT INTO users VALUES (
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s
+                    );
+                """, user.trans_to_iterable())
+                return "Success", 200
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+                return "Error", 500
+        else:
+            print("Data Base doesn't connected")
+            return "Error", 503
+
+    def read_user(self, email_: str) -> User or None:
+        if self.connection:
+            try:
+                self.cursor.execute("""
+                    SELECT * FROM users WHERE users.email = %(email)s;
+                """, {"email": email_})
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+                return None
+            else:
+                return User(*self.cursor.fetchone())
+        else:
+            print("Data Base doesn't connected")
+            return None
+
+    def check_user(self, email_: str) -> tuple:
+        if self.connection:
+            try:
+                self.cursor.execute("""
+                    SELECT email FROM users WHERE users.email = %(email)s;
+                """, {"email": email_})
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+                return "Error", 500
+            else:
+                if self.cursor.fetchone():
+                    return "Error", 409
+                else:
+                    return "Success", 200
+        else:
+            print("Data Base doesn't connected")
+            return "Error", 503
+
+    def update_user(self, user: User) -> tuple:
+        if self.connection:
+            try:
+                self.cursor.execute("""
+                    UPDATE users SET drinks_mistakes = %s, meal_mistakes = %s, cocktails_mistakes = %s
+                    WHERE name = %s AND password = %s;
+                """, [user.trans_to_iterable()[i] for i in [3, 4, 5, 1, 2]])
+                return "Success", 200
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+                return "Error", 500
+        else:
+            print("Data Base doesn't connected")
+            return "Error", 503
+
+    def sign_in(self, name_: str, password_: str) -> tuple:
+        if self.connection:
+            try:
+                self.cursor.execute("""
+                    SELECT drinks_mistakes, meal_mistakes, cocktails_mistakes FROM users WHERE users.name = %(name)s 
+                    AND users.password = %(password)s;
+                """, {"name": name_, "password": password_})
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+                return "Error", 500
+            else:
+                data = self.cursor.fetchone()
+                if data:
+                    return {"drinks_mistakes": data[0], "meal_mistakes": data[1], "cocktails_mistakes": data[2]}, 200
+                else:
+                    return "Error", 401
+
+        else:
+            print("Data Base doesn't connected")
+            return "Error", 503
 
     def commit(self) -> None:
         if self.connection:
