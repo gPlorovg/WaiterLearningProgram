@@ -1,19 +1,33 @@
+CREATE TABLE users (
+  id                    BIGINT,
+  name                  VARCHAR(30),
+  password              VARCHAR(30),
+  drinks_mistakes       INTEGER[],
+  meal_mistakes         INTEGER[],
+  cocktails_mistakes    INTEGER[]
+)
 CREATE TABLE meals (
-  name 			VARCHAR(60),
-  ingredients 	VARCHAR(40)[],
-  price 		INTEGER,
-  serving 		VARCHAR(200),
-  course 		VARCHAR(60),
-  alternatives 	VARCHAR(60)[],
-  meal_matches 	VARCHAR(60)[],
-  drink_matches VARCHAR(60)[]
+  id                    BIGINT,
+  name 			        VARCHAR(60),
+  section               VARCHAR(60),
+  price 		        INTEGER,
+  serving 		        VARCHAR(200),
+  description 	        VARCHAR(300),
 );
 CREATE TABLE drinks (
-  name 			VARCHAR(60),
-  ingredients 	VARCHAR(40)[],
-  price 		INTEGER,
-  serving 		VARCHAR(200),
-  volume 		INTEGER,
-  alternatives 	VARCHAR(60)[],
-  meal_matches 	VARCHAR(60)[]
+  id                    BIGINT,
+  name 			        VARCHAR(60),
+  section               VARCHAR(60),
+  price 		        INTEGER,
+  serving 		        VARCHAR(200),
+  volume 		        VARCHAR(20)
 );
+CREATE TABLE cocktails (
+  id                    BIGINT,
+  name 			        VARCHAR(60),
+  price 		        INTEGER,
+  serving 		        VARCHAR(200),
+  ingredients 	        VARCHAR(40)[],
+  volume 		        VARCHAR(20),
+  image_path            VARCHAR(120)
+)
