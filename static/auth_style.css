@@ -55,8 +55,7 @@ a {
     height: 120px;
     border: 6px solid #1E1E1E;
     border-radius: 14px;
-    margin: auto;
-    margin-bottom: 70px;
+    margin: auto auto 70px auto;
     padding-left: 15px;
 
 }
