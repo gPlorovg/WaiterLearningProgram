@@ -10,7 +10,9 @@
     <div class="wrapper">
         <div class="title">{{ title }}</div>
         <button id="exam">exam</button>
-        <button id="mistakes">mistakes</button>
+        <div class="mistakes_block">
+            <button id="mistakes">mistakes</button><label id="mistakes_count">555</label>
+        </div>
         <button id="guess_price">guess price</button>
         {% for name in names %}
             {% set label = " ".join(name.split("_")) %}
