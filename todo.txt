@@ -1,7 +1,9 @@
-auth
-cocktails exam
-cocktails mistakes
-cocktails guess price
+!!!new menu meal
+
+add guess price
+add cocktails exam
+add cocktails mistakes
+add cocktails guess price
 
 create games(
     exam

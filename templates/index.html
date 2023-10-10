@@ -11,14 +11,15 @@
         <div class="title">
             Sign In
         </div>
-        <div id="new_user">
+        <div class="block">
             <a href="sign_up">new user</a>
         </div>
         <div class="block">
-            <input id="inp_name" placeholder="name">
+            <input id="inp_name" name="name" placeholder="name" maxlength="20" type="text" required data-toggle="True">
         </div>
         <div class="block">
-            <input id="inp_password" placeholder="password" type="password">
+            <input id="inp_password" name="password" placeholder="password" maxlength="20" type="password"
+                   required data-toggle="True">
         </div>
         <button class="submit_btn">Submit</button>
     </div>

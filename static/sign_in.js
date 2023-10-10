@@ -1,6 +1,6 @@
-btn = document.querySelector(".submit_btn");
-name_ = document.querySelector("#inp_name");
-password_ = document.querySelector("#inp_password");
+const btn = document.querySelector(".submit_btn");
+const name_ = document.querySelector("#inp_name");
+const password_ = document.querySelector("#inp_password");
 btn.addEventListener("click", send_data)
 
 async function send_data() {
@@ -25,8 +25,8 @@ async function send_data() {
             window.location = window.location.origin + "/main";
             break;
         case 401:
-            error(name_.parentElement);
-            error(password_.parentElement);
+            error(name_);
+            error(password_);
             break;
         default:
             window.location = window.location.origin + "/error" + "?status_code=" + resp.status;
@@ -35,5 +35,12 @@ async function send_data() {
 }
 
 function error(el) {
-    el.style["borderColor"] = "red";
+    if (el.getAttribute("data-toggle") === "True") {
+        el.style["borderColor"] = "red";
+        const err_label = document.createElement("label");
+        err_label.classList.add("err_label")
+        err_label.textContent = "Wrong " + el.getAttribute("name") + "!";
+        el.parentElement.insertAdjacentElement("afterbegin", err_label);
+        el.setAttribute("data-toggle", "False")
+    }
 }
