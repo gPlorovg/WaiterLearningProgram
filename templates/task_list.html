@@ -7,13 +7,15 @@
     <link rel="stylesheet" href="../static/task_list.css">
 </head>
 <body>
-    <div class="title">{{ title }}</div>
-    <button id="exam">exam</button>
-    <button id="mistakes">mistakes</button>
-    <button id="guess_price">guess price</button>
-    {% for name in names %}
-        {% set label = " ".join(name.split("_")) %}
-        <button id="{{ name }}">{{ label }}</button>
-    {% endfor %}
+    <div class="wrapper">
+        <div class="title">{{ title }}</div>
+        <button id="exam">exam</button>
+        <button id="mistakes">mistakes</button>
+        <button id="guess_price">guess price</button>
+        {% for name in names %}
+            {% set label = " ".join(name.split("_")) %}
+            <button id="{{ name }}">{{ label }}</button>
+        {% endfor %}
+    </div>
 </body>
 </html>

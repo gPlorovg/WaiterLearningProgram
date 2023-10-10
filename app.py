@@ -61,8 +61,10 @@ def task_list():
         names = ["guess_ingredients", "match_price_and_volume"]
     elif request.path == "/menu":
         names = ["guess_serving", "match_price", "match_serving", "match_description"]
+    title = request.path.lstrip("/")
+    title = title[0].upper() + title[1:]
 
-    return render_template("task_list.html", title=request.path.lstrip("/"), names=names)
+    return render_template("task_list.html", title=title, names=names)
 
 
 @app.get("/error")
