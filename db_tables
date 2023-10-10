@@ -5,7 +5,7 @@ CREATE TABLE users (
   drinks_mistakes       INTEGER[],
   meal_mistakes         INTEGER[],
   cocktails_mistakes    INTEGER[]
-)
+);
 CREATE TABLE meals (
   id                    BIGINT,
   name 			        VARCHAR(60),

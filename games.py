@@ -25,17 +25,58 @@ def exam_meals() -> dict:
     pass
 
 
-def guess_price(is_meal: bool) -> tuple:
-    if is_meal:
-        name = choice(db.all_meals)
-        meal = db.read_meal(name)
-        price = meal.price
-    else:
-        name = choice(db.all_drinks)
-        drink = db.read_drink(name)
-        price = drink.price
+def get_wrong_ans(section: str, type_: str) -> list:
+    resp = list()
+    table = None
 
-    return name, price
+    match section:
+        case "bar":
+            table = "drinks"
+        case "cocktails":
+            table = "cocktails"
+        case "menu":
+            table = "meals"
+
+    match type_:
+        case "price":
+            resp = sample(db.read_all_prices(table), 3)
+        case "volume":
+            pass
+        case "serving":
+            pass
+        case "ingredients":
+            pass
+
+    return resp
+
+
+def guess_price(section: str) -> tuple:
+    id_ = 0
+    obj = None
+    resp = dict()
+    state = "Error"
+
+    match section:
+        case "bar":
+            id_ = choice(db.all_drinks_id)
+            obj = db.read_drink(id_)
+        case "cocktails":
+            id_ = choice(db.all_cocktails_id)
+            obj = db.read_cocktail(id_)
+        case "menu":
+            id_ = choice(db.all_meals_id)
+            obj = db.read_meal(id_)
+    if obj:
+        state = "Success"
+        resp = {
+            "id": id_,
+            "section": obj.section,
+            "name": obj.name,
+            "price": obj.price,
+            "wrong_ans": get_wrong_ans(section, "price")
+        }
+
+    return state, resp
 
 
 def match_prices(is_meal: bool) -> dict:

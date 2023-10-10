@@ -3,6 +3,7 @@ from os import getenv
 from dotenv import load_dotenv
 from db_manage import DataBase
 from Objects import User
+import games
 
 
 load_dotenv()
@@ -64,8 +65,16 @@ def task_list():
     title = request.path.lstrip("/")
     title = title[0].upper() + title[1:]
 
-    return render_template("task_list.html", title=title, names=names)
+    return render_template("quizzies_list.html", title=title, names=names)
 
+
+@app.get("/bar/guess_price")
+@app.get("/cocktails/guess_price")
+@app.get("/menu/guess_price")
+def guess_price():
+    section = request.path.split("/")[1]
+    print(games.guess_price(section))
+    return render_template("quiz.html")
 
 @app.get("/error")
 def error():

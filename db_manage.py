@@ -32,6 +32,7 @@ class DataBase:
             self.all_meals_id = self.read_all_meals_id()
             self.all_drinks_id = self.read_all_drinks_id()
             self.all_cocktails_id = self.read_all_cocktails_id()
+            # self.all_prices = self.read_all_prices()
 
     def create_meal(self, meal: Meal) -> None:
         if self.connection:
@@ -288,6 +289,22 @@ class DataBase:
         else:
             print("Data Base doesn't connected")
             return "Error", 503
+
+    def read_all_prices(self, table_) -> list or None:
+        if self.connection:
+            try:
+                self.cursor.execute(f"""
+                    SELECT DISTINCT ON (price) price FROM {table_};
+                """)
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+                return None
+            else:
+                return [i[0] for i in self.cursor.fetchall()]
+        else:
+            print("Data Base doesn't connected")
+            return None
 
     def commit(self) -> None:
         if self.connection:
