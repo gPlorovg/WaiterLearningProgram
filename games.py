@@ -25,7 +25,7 @@ def exam_meals() -> dict:
     pass
 
 
-def get_wrong_ans(section: str, type_: str) -> list:
+def get_wrong_ans(section: str, type_: str, true_ans, count: int) -> list:
     resp = list()
     table = None
 
@@ -39,7 +39,7 @@ def get_wrong_ans(section: str, type_: str) -> list:
 
     match type_:
         case "price":
-            resp = sample(db.read_all_prices(table), 3)
+            resp = sample([i for i in db.read_all_prices(table) if i != true_ans], count)
         case "volume":
             pass
         case "serving":
@@ -73,7 +73,7 @@ def guess_price(section: str) -> tuple:
             "section": obj.section,
             "name": obj.name,
             "price": obj.price,
-            "wrong_ans": get_wrong_ans(section, "price")
+            "wrong_ans": get_wrong_ans(section, "price", obj.price, 3)
         }
 
     return state, resp
