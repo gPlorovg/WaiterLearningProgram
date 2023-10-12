@@ -28,13 +28,13 @@ class Meal(Recipe):
 
 @dataclass
 class Drink(Recipe):
-    volume: str = None
+    volume: int = 0
 
 
 @dataclass
 class Cocktail(Recipe):
     ingredients: list[str] = None
-    volume: str = None
+    volume: int = 0
     img_path: str = None
 
 

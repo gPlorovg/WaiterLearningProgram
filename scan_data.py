@@ -58,7 +58,10 @@ with open("data/drinks.csv") as f:
                 else:
                     name = row[0]
                     price = int(row[3].rstrip("р.").replace(" ", ""))
-                    volume = row[1]
+                    volume = float(row[1].replace(",", "."))
+                    if volume < 1:
+                        volume *= 1000
+                    volume = int(volume)
                     drink_list.append(Drink(name=name, section=section, price=price, serving=serving, volume=volume))
 
 imgs = listdir("data/cocktail_img")
@@ -73,7 +76,7 @@ with open("data/cocktails.csv") as f:
                 name = row[0]
                 ingredients = row[1].split(" | ")
                 serving = row[3]
-                volume = row[4].rstrip(" мл")
+                volume = int(row[4].rstrip(" мл"))
                 price = int(row[5].rstrip(" р."))
                 img_path = "data/cocktail_img/" + imgs.pop(0)
                 cocktail_list.append(Cocktail(name=name, section=section, price=price, serving=serving,

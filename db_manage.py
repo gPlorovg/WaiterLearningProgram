@@ -306,6 +306,54 @@ class DataBase:
             print("Data Base doesn't connected")
             return None
 
+    def read_all_volumes(self, table_) -> list or None:
+        if self.connection:
+            try:
+                self.cursor.execute(f"""
+                    SELECT DISTINCT ON (volume) volume FROM {table_};
+                """)
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+                return None
+            else:
+                return [i[0] for i in self.cursor.fetchall()]
+        else:
+            print("Data Base doesn't connected")
+            return None
+
+    def read_all_serving(self, table_) -> list or None:
+        if self.connection:
+            try:
+                self.cursor.execute(f"""
+                    SELECT DISTINCT ON (serving) serving FROM {table_};
+                """)
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+                return None
+            else:
+                return [i[0] for i in self.cursor.fetchall()]
+        else:
+            print("Data Base doesn't connected")
+            return None
+
+    def read_all_ingredients(self, table_) -> list or None:
+        if self.connection:
+            try:
+                self.cursor.execute(f"""
+                    SELECT DISTINCT ON (ingredients) ingredients FROM {table_};
+                """)
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+                return None
+            else:
+                return [i[0] for i in self.cursor.fetchall()]
+        else:
+            print("Data Base doesn't connected")
+            return None
+
     def commit(self) -> None:
         if self.connection:
             self.connection.commit()

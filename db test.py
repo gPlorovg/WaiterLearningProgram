@@ -15,15 +15,15 @@ db = DataBase("WaiterLearningProgram_db", USER, HOST, DB_PASSWORD)
 # user = User("email", "name", "password", [1, 2], [3], [4, 5])
 # print(db.sign_in(user.name, user.password))
 
-# for obj in meals_list:
-#     db.create_meal(obj)
-#
-# for obj in drink_list:
-#     db.create_drink(obj)
-#
-# for obj in cocktail_list:
-#     db.create_cocktail(obj)
-#
-# db.commit()
+for obj in meals_list:
+    db.create_meal(obj)
 
-print(db.read_all_prices("cocktails"))
+for obj in drink_list:
+    db.create_drink(obj)
+
+for obj in cocktail_list:
+    db.create_cocktail(obj)
+
+db.commit()
+
+print(db.read_all_serving("meals"))

@@ -20,7 +20,7 @@ CREATE TABLE drinks (
   section               VARCHAR(60),
   price 		        INTEGER,
   serving 		        VARCHAR(300),
-  volume 		        VARCHAR(20)
+  volume 		        INTEGER
 );
 CREATE TABLE cocktails (
   id                    BIGINT,
@@ -29,6 +29,6 @@ CREATE TABLE cocktails (
   price 		        INTEGER,
   serving 		        VARCHAR(200),
   ingredients 	        VARCHAR(40)[],
-  volume 		        VARCHAR(20),
-  img_path            VARCHAR(120)
+  volume 		        INTEGER,
+  img_path              VARCHAR(120)
 )
