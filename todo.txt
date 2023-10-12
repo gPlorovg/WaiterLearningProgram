@@ -1,6 +1,3 @@
 !!!new menu meal
-
-check true answer problem
-update user mistakes problem
-
 create user interface
+update user mistakes problem

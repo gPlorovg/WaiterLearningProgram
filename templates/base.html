@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Waiter Learning Program</title>
+    <link rel="stylesheet" href="../static/reset.css">
+    <link rel="stylesheet" href="../static/base.css">
+</head>
+<body>
+    <div class="wrapper">
+        {% block title %}
+        <button class="turn_back"></button>
+        <div class="title">{{ title }}</div>
+        <div class="block">{{ section }}</div>
+        <div class="block">{{ name }}</div>
+        {% endblock %}
+        {% block addons %}{% endblock %}
+        {% block content %}{% endblock %}
+        {% block sub_buttons %}
+        <button class="submit_btn">Submit</button>
+        {% endblock %}
+    </div>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

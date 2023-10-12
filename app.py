@@ -69,8 +69,28 @@ def guess_price():
     prices.append(data["price"])
     shuffle(prices)
     if state == "Success":
-        return render_template("quiz.html", title="guess_price", section=data["section"], name=data["name"],
+        return render_template("guess_price.html", title="guess_price", section=data["section"], name=data["name"],
                                prices=prices, true_ans=data["price"])
+    else:
+        return make_response(500, state)
+
+
+@app.template_filter("short_value")
+def short_value(s: str) -> str:
+    return s[:10] + str(len(s))
+
+
+@app.get("/bar/guess_serving")
+@app.get("/menu/guess_serving")
+def guess_serving():
+    section = request.path.split("/")[1]
+    state, data = games.guess_serving(section)
+    serving = data["wrong_serving"]
+    serving.append(data["serving"])
+    shuffle(serving)
+    if state == "Success":
+        return render_template("guess serving.html", title="guess_serving", section=data["section"], name=data["name"],
+                               serving=serving, true_ans=short_value(data["serving"]))
     else:
         return make_response(500, state)
 

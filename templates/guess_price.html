@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="radio_box">
+    {% for price in prices %}
+        <label>
+            <input type="radio" class="radio" name="contact" value="{{ price }}" checked/>
+            {{ price }}р
+        </label>
+    {% endfor %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+    window.localStorage.setItem("true_ans", {{ true_ans }});
+</script>
+<script src="../static/guess_radio.js"></script>
+{% endblock %}
