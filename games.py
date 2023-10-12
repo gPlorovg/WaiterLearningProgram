@@ -164,6 +164,33 @@ def mistakes(section: str, mistakes_id: list) -> tuple:
     return state, resp
 
 
+def guess_serving(section: str) -> tuple:
+    id_ = 0
+    obj = None
+    resp = dict()
+    state = "Error"
+
+    match section:
+        case "bar":
+            id_ = choice(db.all_drinks_id)
+            obj = db.read_drink(id_)
+        case "menu":
+            id_ = choice(db.all_meals_id)
+            obj = db.read_meal(id_)
+
+    if obj:
+        state = "Success"
+        resp = {
+            "id": id_,
+            "section": obj.section,
+            "name": obj.name,
+            "serving": obj.serving,
+            "wrong_serving": get_wrong_ans(section, "serving", obj.serving, 3)
+        }
+
+    return state, resp
+
+
 def match_prices(is_meal: bool) -> dict:
     resp = dict()
 

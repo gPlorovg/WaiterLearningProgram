@@ -9,7 +9,6 @@ add cocktails guess price
 
 create games(
     drinks (
-        guess serving
         match price and volume
         match serving
     )
@@ -18,7 +17,6 @@ create games(
         match price and volume
     )
     meals (
-        guess serving
         match price
         match serving
         match description
