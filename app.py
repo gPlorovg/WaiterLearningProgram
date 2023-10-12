@@ -57,9 +57,9 @@ def main():
 def task_list():
     names = list()
     if request.path == "/bar":
-        names = ["guess_serving", "match_price_and_volume", "match_serving"]
+        names = ["guess_serving", "match_price", "match_volume", "match_serving"]
     elif request.path == "/cocktails":
-        names = ["guess_ingredients", "match_price_and_volume"]
+        names = ["guess_ingredients", "match_price"]
     elif request.path == "/menu":
         names = ["guess_serving", "match_price", "match_serving", "match_description"]
     title = request.path.lstrip("/")
