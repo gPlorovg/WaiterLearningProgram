@@ -8,19 +8,23 @@
 </head>
 <body>
     <div class="wrapper">
+        <button class="turn_back"></button>
         <div class="title">{{ title }}</div>
         <div class="block">{{ section }}</div>
         <div class="block">{{ name }}</div>
         <div class="radio_box">
-        {% for price in prices %}
+            {% for price in prices %}
                 <label>
-                    <input type="checkbox" class="radio" value="1">
+                    <input type="radio" class="radio" name="contact" value="{{ price }}" checked/>
                     {{ price }}р
                 </label>
-        {% endfor %}
+            {% endfor %}
         </div>
         <button class="submit_btn">Submit</button>
     </div>
+    <script>
+        window.localStorage.setItem("true_ans", {{ true_ans }});
+    </script>
     <script src="../static/quiz.js"></script>
 </body>
 </html>
