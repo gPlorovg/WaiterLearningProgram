@@ -51,18 +51,19 @@ with open("data/drinks.csv") as f:
                 section = row[0]
                 section_ = section
             else:
-                if row[4]:
-                    serving = row[4]
-                if row[1] == "":
-                    section_ = section + " | " + row[0]
-                else:
-                    name = row[0]
-                    price = int(row[3].rstrip("р.").replace(" ", ""))
-                    volume = float(row[1].replace(",", "."))
-                    if volume < 1:
-                        volume *= 1000
-                    volume = int(volume)
-                    drink_list.append(Drink(name=name, section=section, price=price, serving=serving, volume=volume))
+                if section != "КОКТЕЙЛИ/COCKTAILS":
+                    if row[4]:
+                        serving = row[4]
+                    if row[1] == "":
+                        section_ = section + " | " + row[0]
+                    else:
+                        name = row[0]
+                        price = int(row[3].rstrip("р.").replace(" ", ""))
+                        volume = float(row[1].replace(",", "."))
+                        if volume < 1:
+                            volume *= 1000
+                        volume = int(volume)
+                        drink_list.append(Drink(name=name, section=section, price=price, serving=serving, volume=volume))
 
 imgs = listdir("data/cocktail_img")
 cocktail_list = list()

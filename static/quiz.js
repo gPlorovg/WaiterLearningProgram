@@ -7,7 +7,7 @@ const radios = document.querySelectorAll(".radio");
 const next_btn = document.createElement("button");
 next_btn.classList.add("submit_btn");
 next_btn.textContent = "Next";
-next_btn.addEventListener("click", () => {window.location = window.location + "/guess_price"});
+next_btn.addEventListener("click", window.location.reload);
 
 function submit() {
     let ans_radio = Node;
