@@ -12,7 +12,7 @@ CREATE TABLE meals (
   section               VARCHAR(60),
   price 		        INTEGER,
   serving 		        VARCHAR(200),
-  description 	        VARCHAR(400),
+  description 	        VARCHAR(400)
 );
 CREATE TABLE drinks (
   id                    BIGINT,

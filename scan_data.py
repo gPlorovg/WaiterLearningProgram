@@ -74,7 +74,7 @@ with open("data/cocktails.csv") as f:
                 section = row[0]
             else:
                 name = row[0]
-                ingredients = row[1].split(" | ")
+                ingredients = [i.rstrip().lstrip() for i in row[1].split(" | ")]
                 serving = row[3]
                 volume = int(row[4].rstrip(" мл"))
                 price = int(row[5].rstrip(" р."))

@@ -5,7 +5,7 @@ add cocktails exam
 add cocktails mistakes
 add cocktails guess price
 
-
+fix some empty data in meals serving and description
 
 create games(
     drinks (

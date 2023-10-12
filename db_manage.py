@@ -1,4 +1,5 @@
 from sys import exc_info
+from itertools import chain
 import psycopg2 as pg
 from Objects import Meal, Drink, Cocktail, User
 
@@ -349,7 +350,7 @@ class DataBase:
                 self.connection.rollback()
                 return None
             else:
-                return [i[0] for i in self.cursor.fetchall()]
+                return list(set(chain.from_iterable([i[0] for i in self.cursor.fetchall()])))
         else:
             print("Data Base doesn't connected")
             return None

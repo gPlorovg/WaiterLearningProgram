@@ -30,7 +30,7 @@ def get_wrong_ans(section: str, type_: str, true_ans, count: int) -> list:
         case "volume":
             resp = sample([i for i in db.read_all_volumes(table) if i != true_ans], count)
         case "serving":
-            resp = sample([i for i in db.read_all_serving(table) if i != true_ans], count)
+            resp = sample([i for i in db.read_all_serving(table) if i and i != true_ans], count)
         case "ingredients":
             resp = sample([i for i in db.read_all_ingredients(table) if i not in true_ans], count)
 
@@ -177,6 +177,10 @@ def guess_serving(section: str) -> tuple:
         case "menu":
             id_ = choice(db.all_meals_id)
             obj = db.read_meal(id_)
+            if obj:
+                while not obj.serving:
+                    id_ = choice(db.all_meals_id)
+                    obj = db.read_meal(id_)
 
     if obj:
         state = "Success"
