@@ -1,4 +1,5 @@
 from flask import Flask, render_template, make_response, request
+from random import shuffle
 from os import getenv
 from dotenv import load_dotenv
 from db_manage import DataBase
@@ -73,8 +74,15 @@ def task_list():
 @app.get("/menu/guess_price")
 def guess_price():
     section = request.path.split("/")[1]
-    print(games.guess_price(section))
-    return render_template("quiz.html")
+    state, data = games.guess_price(section)
+    prices = data["wrong_prices"]
+    prices.append(data["price"])
+    shuffle(prices)
+    if state == "Success":
+        return render_template("quiz.html", title="guess_price", section=data["section"], name=data["name"],
+                               prices=prices)
+    else:
+        return make_response(500, state)
 
 
 @app.get("/error")

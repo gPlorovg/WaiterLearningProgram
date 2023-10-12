@@ -7,6 +7,20 @@
     <link rel="stylesheet" href="../static/quiz.css">
 </head>
 <body>
+    <div class="wrapper">
+        <div class="title">{{ title }}</div>
+        <div class="block">{{ section }}</div>
+        <div class="block">{{ name }}</div>
+        <div class="radio_box">
+        {% for price in prices %}
+                <label>
+                    <input type="checkbox" class="radio" value="1">
+                    {{ price }}р
+                </label>
+        {% endfor %}
+        </div>
+        <button class="submit_btn">Submit</button>
+    </div>
     <script src="../static/quiz.js"></script>
 </body>
 </html>

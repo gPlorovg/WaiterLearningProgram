@@ -1,7 +1,6 @@
 !!!new menu meal
 
+check true answer problem
+update user mistakes problem
+
 create user interface
-add guess price
-add cocktails exam
-add cocktails mistakes
-add cocktails guess price
