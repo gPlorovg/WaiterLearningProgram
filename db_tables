@@ -30,5 +30,5 @@ CREATE TABLE cocktails (
   serving 		        VARCHAR(200),
   ingredients 	        VARCHAR(40)[],
   volume 		        VARCHAR(20),
-  image_path            VARCHAR(120)
+  img_path            VARCHAR(120)
 )

@@ -35,7 +35,7 @@ class Drink(Recipe):
 class Cocktail(Recipe):
     ingredients: list[str] = None
     volume: str = None
-    image_path: str = None
+    img_path: str = None
 
 
 @dataclass

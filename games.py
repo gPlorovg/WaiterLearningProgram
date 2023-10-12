@@ -12,19 +12,6 @@ DB_PASSWORD = getenv("DB_PASSWORD")
 db = DataBase("WaiterLearningProgram_db", USER, HOST, DB_PASSWORD)
 
 
-# name, price, serving, volume
-def exam_drinks() -> dict:
-    pass
-
-
-def exam_cocktails() -> dict:
-    pass
-
-
-def exam_meals() -> dict:
-    pass
-
-
 def get_wrong_ans(section: str, type_: str, true_ans, count: int) -> list:
     resp = list()
     table = None
@@ -73,8 +60,54 @@ def guess_price(section: str) -> tuple:
             "section": obj.section,
             "name": obj.name,
             "price": obj.price,
-            "wrong_ans": get_wrong_ans(section, "price", obj.price, 3)
+            "wrong_prices": get_wrong_ans(section, "price", obj.price, 3)
         }
+
+    return state, resp
+
+
+def exam(section: str) -> tuple:
+    resp = list()
+    state = "Error"
+
+    match section:
+        case "bar":
+            for id_ in db.all_drinks_id:
+                obj = db.read_drink(id_)
+                resp.append({
+                    "id": id_,
+                    "section": obj.section,
+                    "name": obj.name,
+                    "price": obj.price,
+                    "volume": obj.volume,
+                    "wrong_volumes": get_wrong_ans(section, "volume", obj.volume, 3),
+                    "serving": obj.serving,
+                    "wrong_serving": get_wrong_ans(section, "serving", obj.serving, 3)
+                })
+        case "cocktails":
+            for id_ in db.all_cocktails_id:
+                obj = db.read_cocktail(id_)
+                resp.append({
+                    "id": id_,
+                    "section": obj.section,
+                    "name": obj.name,
+                    "img_path": obj.img_path,
+                    "price": obj.price,
+                    "ingredients": obj.ingredients,
+                    "wrong_ingredients": get_wrong_ans(section, "ingredients", obj.ingredients, 3)
+                })
+        case "menu":
+            for id_ in db.all_meals_id:
+                obj = db.read_meal(id_)
+                resp.append({
+                    "id": id_,
+                    "section": obj.section,
+                    "name": obj.name,
+                    "description": obj.description,
+                    "price": obj.price,
+                    "serving": obj.serving,
+                    "wrong_serving": get_wrong_ans(section, "serving", obj.serving, 3)
+                })
 
     return state, resp
 

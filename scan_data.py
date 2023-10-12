@@ -77,4 +77,4 @@ with open("data/cocktails.csv") as f:
                 price = int(row[5].rstrip(" р."))
                 img_path = "data/cocktail_img/" + imgs.pop(0)
                 cocktail_list.append(Cocktail(name=name, section=section, price=price, serving=serving,
-                                              ingredients=ingredients, image_path=img_path, volume=volume))
+                                              ingredients=ingredients, img_path=img_path, volume=volume))
