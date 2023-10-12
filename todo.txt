@@ -1,24 +1,7 @@
 !!!new menu meal
 
+create user interface
 add guess price
 add cocktails exam
 add cocktails mistakes
 add cocktails guess price
-
-fix some empty data in meals serving and description
-
-create games(
-    drinks (
-        match price and volume
-        match serving
-    )
-    cocktails (
-        match price and volume
-    )
-    meals (
-        match price
-        match serving
-        match description
-    )
-)
-create user interface

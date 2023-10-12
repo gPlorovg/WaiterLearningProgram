@@ -215,57 +215,46 @@ def guess_ingredients() -> tuple:
     return state, resp
 
 
-# def match_prices(is_meal: bool) -> dict:
-#     resp = dict()
-#
-#     if is_meal:
-#         names = sample(db.all_meals, 6)
-#         for name in names:
-#             resp[name] = db.read_meal(name).price
-#     else:
-#         names = sample(db.all_drinks, 6)
-#         for name in names:
-#             resp[name] = db.read_drink(name).price
-#
-#     return resp
-#
-#
-# def build_recipe(is_meal: bool) -> tuple:
-#     if is_meal:
-#         name = choice(db.all_meals)
-#         meal = db.read_meal(name)
-#         right_ingredients = meal.ingredients
-#         wrong_ingredients = list()
-#         i = 0
-#
-#         while len(wrong_ingredients) < 4:
-#             if i < len(meal.alternatives):
-#                 wrong_ingredients += list(set(db.read_meal(meal.alternatives[i]).ingredients) - set(right_ingredients)
-#                                           - set(wrong_ingredients))
-#                 i += 1
-#             else:
-#                 add_name = choice(db.all_meals)
-#                 while add_name == name:
-#                     add_name = choice(db.all_meals)
-#                 wrong_ingredients += list(set(db.read_meal(add_name).ingredients) - set(right_ingredients)
-#                                           - set(wrong_ingredients))
-#     else:
-#         name = choice(db.all_drinks)
-#         drink = db.read_drink(name)
-#         right_ingredients = drink.ingredients
-#         wrong_ingredients = list()
-#         i = 0
-#
-#         while len(wrong_ingredients) < 4:
-#             if i < len(drink.alternatives):
-#                 wrong_ingredients += list(set(db.read_drink(drink.alternatives[i]).ingredients) - set(right_ingredients)
-#                                           - set(wrong_ingredients))
-#                 i += 1
-#             else:
-#                 add_name = choice(db.all_drinks)
-#                 while add_name == name:
-#                     add_name = choice(db.all_drinks)
-#                 wrong_ingredients += list(set(db.read_drink(add_name).ingredients) - set(right_ingredients)
-#                                           - set(wrong_ingredients))
-#
-#     return right_ingredients, sample(wrong_ingredients, 4)
+def match_quiz(section: str, type_: str, count: int) -> tuple:
+    obj_list = list()
+    resp = list()
+    state = "Error"
+
+    match section:
+        case "bar":
+            id_list = sample(db.all_drinks_id, count)
+            obj_list = map(db.read_drink, id_list)
+        case "cocktails":
+            id_list = sample(db.all_cocktails_id, count)
+            obj_list = map(db.read_cocktail, id_list)
+        case "menu":
+            id_list = sample(db.all_meals_id, count)
+            obj_list = map(db.read_meal, id_list)
+
+    if obj_list:
+        state = "Success"
+        match type_:
+            case "price":
+                for obj in obj_list:
+                    resp.append({
+                        "id": obj.id,
+                        "name": obj.name,
+                        "price": obj.price
+                    })
+            case "price&volume":
+                for obj in obj_list:
+                    resp.append({
+                        "id": obj.id,
+                        "name": obj.name,
+                        "price": obj.price,
+                        "volume": obj.volume
+                    })
+            case "serving":
+                for obj in obj_list:
+                    resp.append({
+                        "id": obj.id,
+                        "name": obj.name,
+                        "serving": obj.serving
+                    })
+
+    return state, resp
