@@ -1,13 +1,13 @@
 const sub_btn = document.querySelector(".submit_btn");
 sub_btn.addEventListener("click", submit);
 const turn_back_btn = document.querySelector(".turn_back");
-turn_back_btn.addEventListener("click", history.back);
+turn_back_btn.addEventListener("click", () => {history.back();});
 const radios = document.querySelectorAll(".radio");
 
 const next_btn = document.createElement("button");
 next_btn.classList.add("submit_btn");
 next_btn.textContent = "Next";
-next_btn.addEventListener("click", window.location.reload);
+next_btn.addEventListener("click", () => {window.location.reload();});
 
 function submit() {
     let ans_radio = Node;
