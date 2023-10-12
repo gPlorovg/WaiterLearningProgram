@@ -1,15 +1,5 @@
-from os import getenv
 from random import choice, sample
-from dotenv import load_dotenv
-from db_manage import DataBase
-
-
-load_dotenv()
-USER = getenv("USER")
-HOST = getenv("HOST")
-DB_PASSWORD = getenv("DB_PASSWORD")
-
-db = DataBase("WaiterLearningProgram_db", USER, HOST, DB_PASSWORD)
+from db_manage import db
 
 
 def get_wrong_ans(section: str, type_: str, true_ans, count: int) -> list:

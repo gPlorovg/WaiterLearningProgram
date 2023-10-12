@@ -1,5 +1,7 @@
 from sys import exc_info
 from itertools import chain
+from os import getenv
+from dotenv import load_dotenv
 import psycopg2 as pg
 from Objects import Meal, Drink, Cocktail, User
 
@@ -378,3 +380,11 @@ class DataBase:
         else:
             print("Successful connected.")
             self.cursor = self.connection.cursor()
+
+
+load_dotenv()
+USER = getenv("USER")
+HOST = getenv("HOST")
+DB_PASSWORD = getenv("DB_PASSWORD")
+
+db = DataBase("WaiterLearningProgram_db", USER, HOST, DB_PASSWORD)
