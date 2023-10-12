@@ -8,15 +8,16 @@
 </head>
 <body>
     <div class="wrapper">
+        <button class="turn_back"></button>
         <div class="title">{{ title }}</div>
-        <button id="exam">exam</button>
+        <button id="exam" class="game">exam</button>
         <div class="mistakes_block">
-            <button id="mistakes">mistakes</button><label id="mistakes_count">555</label>
+            <button id="mistakes" class="game">mistakes</button><label id="mistakes_count">555</label>
         </div>
-        <button id="guess_price">guess price</button>
+        <button id="guess_price" class="game">guess price</button>
         {% for name in names %}
             {% set label = " ".join(name.split("_")) %}
-            <button id="{{ name }}">{{ label }}</button>
+            <button id="{{ name }}" class="game">{{ label }}</button>
         {% endfor %}
     </div>
     <script src="../static/quizzies_list.js"></script>
