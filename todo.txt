@@ -8,8 +8,6 @@ add cocktails guess price
 
 
 create games(
-    exam
-    work on mistakes
     drinks (
         guess serving
         match price and volume

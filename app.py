@@ -76,6 +76,7 @@ def guess_price():
     print(games.guess_price(section))
     return render_template("quiz.html")
 
+
 @app.get("/error")
 def error():
     return render_template("error.html", status_code=request.args["status_code"])
