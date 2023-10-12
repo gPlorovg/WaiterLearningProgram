@@ -53,11 +53,11 @@ with open("data/drinks.csv") as f:
             else:
                 if section != "КОКТЕЙЛИ/COCKTAILS":
                     if row[4]:
-                        serving = row[4]
+                        serving = row[4].replace('\n', " ")
                     if row[1] == "":
                         section_ = section + " | " + row[0]
                     else:
-                        name = row[0]
+                        name = row[0].split("/")[0]
                         price = int(row[3].rstrip("р.").replace(" ", ""))
                         volume = float(row[1].replace(",", "."))
                         if volume < 1:
