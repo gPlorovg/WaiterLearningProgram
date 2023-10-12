@@ -191,6 +191,26 @@ def guess_serving(section: str) -> tuple:
     return state, resp
 
 
+def guess_ingredients() -> tuple:
+    resp = dict()
+    state = "Error"
+
+    id_ = choice(db.all_cocktails_id)
+    obj = db.read_cocktail(id_)
+
+    if obj:
+        state = "Success"
+        resp = {
+            "id": id_,
+            "section": obj.section,
+            "name": obj.name,
+            "ingredients": obj.ingredients,
+            "wrong_ingredients": get_wrong_ans("cocktails", "ingredients", obj.ingredients, 4)
+        }
+
+    return state, resp
+
+
 def match_prices(is_meal: bool) -> dict:
     resp = dict()
 

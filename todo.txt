@@ -13,7 +13,6 @@ create games(
         match serving
     )
     cocktails (
-        guess ingredients
         match price and volume
     )
     meals (
