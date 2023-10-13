@@ -21,7 +21,8 @@ for (const b of document.querySelectorAll(".up")) {
     b.addEventListener("click", move_up);
 }
 
-const rows = document.querySelectorAll(".match_row")
+const rows = document.querySelectorAll(".match_row");
+const type = window.localStorage["type"];
 
 function retry() {
     sub_btn.style.display = "block";
@@ -61,14 +62,21 @@ function submit() {
     const names_rows = {};
 
     for (const r of rows) {
-        resp[r.children[0].textContent] = parseInt(r.children[1].children[1].textContent.slice(0,-1));
+        if (type === "price") {
+            resp[r.children[0].textContent] = parseInt(r.children[1].children[1].textContent.slice(0,-1));
+        } else {
+            resp[r.children[0].textContent] = parseInt(r.children[1].children[1].textContent);
+        }
         names_rows[r.children[0].textContent] = r;
     }
 
     const true_ans = JSON.parse(window.localStorage["true_ans"]);
     for (const i in true_ans) {
         const name = true_ans[i]["name"];
-        if (resp[name] === true_ans[i]["price"]) {
+        console.log(true_ans[i][type]);
+        console.log(resp[name]);
+        console.log(resp[name] === true_ans[i][type]);
+        if (resp[name] === true_ans[i][type]) {
             names_rows[name].children[0].style["borderColor"] = "#27A713";
             names_rows[name].children[1].children[1].style["borderColor"] = "#27A713";
         } else {

@@ -1,0 +1,15 @@
+{% extends "match_price.html" %}
+{% block content %}
+<div class="match_container">
+    {% for name, volume in items.items()%}
+        <div class="match_row" id="{{ loop.index - 1 }}">
+            <label class="block">{{ name }}</label>
+            <div class="movable">
+                <button class="switch down"></button>
+                <label class="block adoptive">{{ volume }}</label>
+                <button class="switch up"></button>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

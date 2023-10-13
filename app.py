@@ -113,15 +113,20 @@ def guess_ingredients():
 @app.get("/bar/match_price")
 @app.get("/cocktails/match_price")
 @app.get("/menu/match_price")
-def match_price():
+@app.get("/bar/match_volume")
+@app.get("/cocktails/match_volume")
+@app.get("/menu/match_volume")
+def match_quiz():
     section = request.path.split("/")[1]
-    state, data = games.match_quiz(section, "price", 4)
+    type_ = request.path.split("_")[1]
+    state, data = games.match_quiz(section, type_, 4)
     names = list(map(lambda x: x["name"], data))
-    prices = list(map(lambda x: x["price"], data))
-    shuffle(prices)
-    items = {names[i]: prices[i] for i in range(len(names))}
+    qualities = list(map(lambda x: x[type_], data))
+    shuffle(qualities)
+    items = {names[i]: qualities[i] for i in range(len(names))}
+    template_name = "match_" + type_ + ".html"
     if state == "Success":
-        return render_template("match_price.html", title="match_price", items=items, true_ans=data)
+        return render_template(template_name, title="match_" + type_, items=items, true_ans=data, type=type_)
     else:
         return make_response(500, state)
 
