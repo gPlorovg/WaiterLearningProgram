@@ -63,7 +63,8 @@ with open("data/drinks.csv") as f:
                         if volume < 1:
                             volume *= 1000
                         volume = int(volume)
-                        drink_list.append(Drink(name=name, section=section, price=price, serving=serving, volume=volume))
+                        drink_list.append(Drink(name=name, section=section, price=price, serving=serving,
+                                                volume=volume))
 
 imgs = listdir("static/cocktail_img")
 cocktail_list = list()
