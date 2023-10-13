@@ -2,7 +2,7 @@
 {% block content %}
 <div class="match_container">
     {% for name, price in items.items()%}
-        <div class="match_row">
+        <div class="match_row" id="{{ loop.index - 1 }}">
             <label class="block">{{ name }}</label>
             <div class="movable">
                 <button class="switch down"></button>
