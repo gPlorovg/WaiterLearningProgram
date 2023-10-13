@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="checkbox_container">
+    {% for ing in ingredients %}
+        <label>
+            <input type="checkbox" class="checkbox" value="{{ ing }}"/>
+            {{ ing }}
+        </label>
+    {% endfor %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+    const true_ans_js = {{ true_ans|tojson }};
+    window.localStorage.setItem("true_ans", JSON.stringify(true_ans_js));
+</script>
+<script src="../static/guess_ingredients.js"></script>
+{% endblock %}

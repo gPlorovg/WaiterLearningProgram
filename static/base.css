@@ -38,12 +38,41 @@ body {
     border: 6px solid #1E1E1E;
     -webkit-appearance: none;
     cursor: pointer;
+
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .radio:checked {
     background-image: url("../static/icons/radio_no_mark.svg");
+}
+
+.checkbox_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    gap: 50px;
+    font-size: 38pt;
+    margin-top: 100px;
+}
+
+.checkbox {
+    width: 62px;
+    height: 62px;
+    border-radius: 14px;
+    background-color: transparent;
+    vertical-align: middle;
+    border: 6px solid #1E1E1E;
+    -webkit-appearance: none;
+    cursor: pointer;
+
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.checkbox:checked {
+    background-image: url("../static/icons/checkbox_no_mark.svg");
 }
 
 

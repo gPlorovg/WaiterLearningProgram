@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, render_template, make_response, request
 from random import shuffle
 from db_manage import db
@@ -48,11 +50,11 @@ def main():
 def task_list():
     names = list()
     if request.path == "/bar":
-        names = ["guess_serving", "match_price", "match_volume", "match_serving"]
+        names = ["guess_serving", "match_price", "match_volume"]
     elif request.path == "/cocktails":
         names = ["guess_ingredients", "match_price"]
     elif request.path == "/menu":
-        names = ["guess_serving", "match_price", "match_serving", "match_description"]
+        names = ["guess_serving", "match_price"]
     title = request.path.lstrip("/")
     title = title[0].upper() + title[1:]
 
@@ -89,8 +91,21 @@ def guess_serving():
     serving.append(data["serving"])
     shuffle(serving)
     if state == "Success":
-        return render_template("guess serving.html", title="guess_serving", section=data["section"], name=data["name"],
+        return render_template("guess_serving.html", title="guess_serving", section=data["section"], name=data["name"],
                                serving=serving, true_ans=short_value(data["serving"]))
+    else:
+        return make_response(500, state)
+
+
+@app.get("/cocktails/guess_ingredients")
+def guess_ingredients():
+    state, data = games.guess_ingredients()
+    ingredients = data["wrong_ingredients"] + data["ingredients"]
+    shuffle(ingredients)
+    if state == "Success":
+        return render_template("guess_ingredients.html", title="guess_ingredients", section=data["section"],
+                               name=data["name"], ingredients=ingredients,
+                               true_ans=data["ingredients"])
     else:
         return make_response(500, state)
 
