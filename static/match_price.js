@@ -24,7 +24,13 @@ for (const b of document.querySelectorAll(".up")) {
 const rows = document.querySelectorAll(".match_row")
 
 function retry() {
-
+    sub_btn.style.display = "block";
+    retry_btn.style.display = "none";
+    next_btn.style.display = "none";
+    for (const r of rows) {
+        r.children[0].style["borderColor"] = "#1E1E1E";
+        r.children[1].children[1].style["borderColor"] = "#1E1E1E";
+    }
 }
 
 function move_up(evt) {
@@ -70,9 +76,13 @@ function submit() {
             names_rows[name].children[1].children[1].style["borderColor"] = "#E91515";
         }
     }
-
-    sub_btn.insertAdjacentElement("afterend", next_btn);
-    sub_btn.insertAdjacentElement("afterend", retry_btn);
+    if (!document.querySelector(".button_container").contains(next_btn)) {
+        sub_btn.insertAdjacentElement("afterend", next_btn);
+        sub_btn.insertAdjacentElement("afterend", retry_btn);
+    } else {
+        next_btn.style.display = "block";
+        retry_btn.style.display = "block";
+    }
     sub_btn.style.display = "none";
 }
 
