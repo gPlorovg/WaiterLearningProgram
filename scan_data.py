@@ -65,7 +65,7 @@ with open("data/drinks.csv") as f:
                         volume = int(volume)
                         drink_list.append(Drink(name=name, section=section, price=price, serving=serving, volume=volume))
 
-imgs = listdir("data/cocktail_img")
+imgs = listdir("static/cocktail_img")
 cocktail_list = list()
 with open("data/cocktails.csv") as f:
     reader = csv.reader(f, delimiter=";")
@@ -79,6 +79,6 @@ with open("data/cocktails.csv") as f:
                 serving = row[3]
                 volume = int(row[4].rstrip(" мл"))
                 price = int(row[5].rstrip(" р."))
-                img_path = "data/cocktail_img/" + imgs.pop(0)
+                img_path = imgs.pop(0)
                 cocktail_list.append(Cocktail(name=name, section=section, price=price, serving=serving,
                                               ingredients=ingredients, img_path=img_path, volume=volume))
