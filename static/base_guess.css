@@ -1,0 +1,122 @@
+/*Импорт шрифтов fonts Roboto Mono*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+body {
+    font-family: "Roboto Mono", monospace;
+    font-style: normal;
+    font-weight: 400;
+    background-color: #D9D9D9;
+    color: #1E1E1E;
+    font-size: 56pt;
+}
+
+.wrapper{
+    margin: 10% 20%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: center;
+}
+
+.radio_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    gap: 50px;
+    font-size: 38pt;
+    margin-top: 100px;
+}
+
+.radio {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background-color: transparent;
+    vertical-align: middle;
+    border: 6px solid #1E1E1E;
+    -webkit-appearance: none;
+    cursor: pointer;
+
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.radio:checked {
+    background-image: url("../static/icons/radio_no_mark.svg");
+}
+
+.checkbox_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    gap: 50px;
+    font-size: 38pt;
+    margin-top: 100px;
+}
+
+.checkbox {
+    width: 62px;
+    height: 62px;
+    border-radius: 14px;
+    background-color: transparent;
+    vertical-align: middle;
+    border: 6px solid #1E1E1E;
+    -webkit-appearance: none;
+    cursor: pointer;
+
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.checkbox:checked {
+    background-image: url("../static/icons/checkbox_no_mark.svg");
+}
+
+
+.title {
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.block {
+    border: 6px solid #1E1E1E;
+    border-radius: 14px;
+    margin: auto auto 10px auto;
+    font-size: 38pt;
+    padding: 15px;
+}
+
+.submit_btn {
+    font: inherit;
+    background-color: #1E1E1E;
+    color: white;
+    border-radius: 14px;
+    padding: 20px 80px;
+    margin: 140px auto;
+}
+
+.turn_back {
+    width: 100px;
+    height: 100px;
+    border-radius: 14px;
+    border: #1E1E1E solid 6px;
+    background-color: transparent;
+    background-image: url("../static/icons/turn_back_arrow.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 100%;
+}
+
+.img_border {
+    background: transparent;
+    margin: 20px auto;
+}
+.img {
+    width: 600px;
+    height: 600px;
+    border: #1E1E1E solid 6px;
+}

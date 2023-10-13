@@ -104,8 +104,24 @@ def guess_ingredients():
     shuffle(ingredients)
     if state == "Success":
         return render_template("guess_ingredients.html", title="guess_ingredients", section=data["section"],
-                               name=data["name"], ingredients=ingredients,
-                               true_ans=data["ingredients"])
+                               name=data["name"], ingredients=ingredients, true_ans=data["ingredients"],
+                               img_path=data["img_path"])
+    else:
+        return make_response(500, state)
+
+
+@app.get("/bar/match_price")
+@app.get("/cocktails/match_price")
+@app.get("/menu/match_price")
+def match_price():
+    section = request.path.split("/")[1]
+    state, data = games.match_quiz(section, "price", 4)
+    prices = data["wrong_prices"]
+    prices.append(data["price"])
+    shuffle(prices)
+    if state == "Success":
+        return render_template("guess_price.html", title="guess_price", section=data["section"], name=data["name"],
+                               prices=prices, true_ans=data["price"])
     else:
         return make_response(500, state)
 

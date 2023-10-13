@@ -1,18 +1,23 @@
-{% extends "base.html" %}
+{% extends "base_guess.html" %}
+{% block addons %}
+    <div class="img_border">
+        <img src="../static/cocktail_img/{{ img_path }}" alt="{{ name }} image" class="img">
+    </div>
+{% endblock %}
 {% block content %}
-<div class="checkbox_container">
-    {% for ing in ingredients %}
-        <label>
-            <input type="checkbox" class="checkbox" value="{{ ing }}"/>
-            {{ ing }}
-        </label>
-    {% endfor %}
-</div>
+    <div class="checkbox_container">
+        {% for ing in ingredients %}
+            <label>
+                <input type="checkbox" class="checkbox" value="{{ ing }}"/>
+                {{ ing }}
+            </label>
+        {% endfor %}
+    </div>
 {% endblock %}
 {% block scripts %}
-<script>
-    const true_ans_js = {{ true_ans|tojson }};
-    window.localStorage.setItem("true_ans", JSON.stringify(true_ans_js));
-</script>
-<script src="../static/guess_ingredients.js"></script>
+    <script>
+        const true_ans_js = {{ true_ans|tojson }};
+        window.localStorage.setItem("true_ans", JSON.stringify(true_ans_js));
+    </script>
+    <script src="../static/guess_ingredients.js"></script>
 {% endblock %}
