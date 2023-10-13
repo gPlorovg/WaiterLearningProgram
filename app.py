@@ -116,12 +116,12 @@ def guess_ingredients():
 def match_price():
     section = request.path.split("/")[1]
     state, data = games.match_quiz(section, "price", 4)
-    prices = data["wrong_prices"]
-    prices.append(data["price"])
+    names = list(map(lambda x: x["name"], data))
+    prices = list(map(lambda x: x["price"], data))
     shuffle(prices)
+    items = {names[i]: prices[i] for i in range(len(names))}
     if state == "Success":
-        return render_template("guess_price.html", title="guess_price", section=data["section"], name=data["name"],
-                               prices=prices, true_ans=data["price"])
+        return render_template("match_price.html", title="match_price", items=items, true_ans=data)
     else:
         return make_response(500, state)
 

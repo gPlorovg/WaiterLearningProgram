@@ -1,0 +1,22 @@
+{% extends "base_match.html" %}
+{% block content %}
+<div class="match_container">
+    {% for name, price in items.items()%}
+        <div class="match_row">
+            <label class="block">{{ name }}</label>
+            <div class="movable">
+                <button class="switch down"></button>
+                <label class="block adoptive">{{ price }}р</label>
+                <button class="switch up"></button>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+    const true_ans_js = {{ true_ans|tojson }};
+    window.localStorage.setItem("true_ans", JSON.stringify(true_ans_js));
+</script>
+<script src="../static/match_price.js"></script>
+{% endblock %}
