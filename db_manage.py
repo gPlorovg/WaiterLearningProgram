@@ -208,6 +208,7 @@ class DataBase:
                     %s,
                     %s,
                     %s,
+                    %s,
                     %s
                     );
                 """, user.trans_to_iterable())
@@ -220,12 +221,12 @@ class DataBase:
             print("Data Base doesn't connected")
             return "Error", 503
 
-    def read_user(self, email_: str) -> User or None:
+    def read_user(self, id_: int) -> User or None:
         if self.connection:
             try:
                 self.cursor.execute("""
-                    SELECT * FROM users WHERE users.email = %(email)s;
-                """, {"email": email_})
+                    SELECT * FROM users WHERE id = %(id)s;
+                """, {"id": id_})
             except pg.ProgrammingError as e:
                 error_print(e)
                 self.connection.rollback()
@@ -240,7 +241,7 @@ class DataBase:
         if self.connection:
             try:
                 self.cursor.execute("""
-                    SELECT email FROM users WHERE users.email = %(email)s;
+                    SELECT email FROM users WHERE email = %(email)s;
                 """, {"email": email_})
             except pg.ProgrammingError as e:
                 error_print(e)
@@ -255,13 +256,13 @@ class DataBase:
             print("Data Base doesn't connected")
             return "Error", 503
 
-    def update_user(self, user: User) -> tuple:
+    def update_user(self, id_: int, data: tuple) -> tuple:
         if self.connection:
             try:
-                self.cursor.execute("""
-                    UPDATE users SET drinks_mistakes = %s, meal_mistakes = %s, cocktails_mistakes = %s
-                    WHERE name = %s AND password = %s;
-                """, [user.trans_to_iterable()[i] for i in [3, 4, 5, 1, 2]])
+                self.cursor.execute(f"""
+                    UPDATE users SET {data[0]} = %(data)s
+                    WHERE id = %(id)s;
+                """, {"id": id_, "data": data[1]})
                 return "Success", 200
             except pg.ProgrammingError as e:
                 error_print(e)
@@ -275,8 +276,8 @@ class DataBase:
         if self.connection:
             try:
                 self.cursor.execute("""
-                    SELECT id, drinks_mistakes, meal_mistakes, cocktails_mistakes FROM users WHERE users.name = %(name)s 
-                    AND users.password = %(password)s;
+                    SELECT id, drinks_mistakes, meal_mistakes, cocktails_mistakes FROM users WHERE name = %(name)s 
+                    AND password = %(password)s;
                 """, {"name": name_, "password": password_})
             except pg.ProgrammingError as e:
                 error_print(e)
