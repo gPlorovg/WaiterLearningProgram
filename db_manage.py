@@ -275,7 +275,7 @@ class DataBase:
         if self.connection:
             try:
                 self.cursor.execute("""
-                    SELECT drinks_mistakes, meal_mistakes, cocktails_mistakes FROM users WHERE users.name = %(name)s 
+                    SELECT id, drinks_mistakes, meal_mistakes, cocktails_mistakes FROM users WHERE users.name = %(name)s 
                     AND users.password = %(password)s;
                 """, {"name": name_, "password": password_})
             except pg.ProgrammingError as e:
@@ -285,7 +285,8 @@ class DataBase:
             else:
                 data = self.cursor.fetchone()
                 if data:
-                    return {"drinks_mistakes": data[0], "meal_mistakes": data[1], "cocktails_mistakes": data[2]}, 200
+                    return {"id": data[0], "drinks_mistakes": data[1], "meal_mistakes": data[2],
+                            "cocktails_mistakes": data[3]}, 200
                 else:
                     return "Error", 401
 

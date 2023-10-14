@@ -40,6 +40,7 @@ class Cocktail(Recipe):
 
 @dataclass
 class User:
+    id: int = 0
     email: str = None
     name: str = None
     password: str = None
@@ -52,3 +53,6 @@ class User:
         for f in fields(self):
             resp.append(getattr(self, f.name))
         return resp
+
+    def __post_init__(self):
+        self.id = hash(self.email + self.name) % (maxsize + 1)

@@ -131,6 +131,60 @@ def match_quiz():
         return make_response(500, state)
 
 
+@app.get("/bar/exam")
+def exam_bar():
+    count = 0 if not request.args.get("exam_count") else request.args.get("exam_count")
+    count += 1
+    user_id = int(request.args.get("user_id"))
+    mistake = bool(request.args.get("mistake"))
+    if mistake:
+        pass # user mistakes add
+
+    data = games.exam_bar_data[count]
+    max_count = len(games.exam_bar_data)
+    serving = data["wrong_serving"].copy()
+    serving.append(data["serving"])
+    shuffle(serving)
+    data["serving_short"] = short_value(data["serving"])
+    return render_template("exam_bar.html", id=data["id"], section=data["section"], name=data["name"], serving=serving,
+                           true_ans=data, count=count, max_count=max_count)
+
+
+# @app.get("/cocktails/exam")
+# def exam_cocktails():
+#     state, data = games.exam(section)
+#     match section:
+#         case "bar":
+#             max_count = len(db.all_drinks_id)
+#         case "cocktails":
+#             max_count = len(db.all_cocktails_id)
+#         case "menu":
+#             max_count = len(db.all_meals_id)
+#     if state == "Success":
+#         return render_template(template_name, title="exam", section=data[section], name=data["name"],
+#                                max_count=max_count,)
+#     else:
+#         return make_response(500, state)
+#
+#
+# @app.get("/menu/exam")
+# def exam_menu():
+#     state, data = games.exam(section)
+#     match section:
+#         case "bar":
+#             max_count = len(db.all_drinks_id)
+#         case "cocktails":
+#             max_count = len(db.all_cocktails_id)
+#         case "menu":
+#             max_count = len(db.all_meals_id)
+#     if state == "Success":
+#         return render_template(template_name, title="exam", section=data[section], name=data["name"],
+#                                max_count=max_count,)
+#     else:
+#         return make_response(500, state)
+#
+
+
 @app.get("/error")
 def error():
     return render_template("error.html", status_code=request.args["status_code"])

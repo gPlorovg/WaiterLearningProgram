@@ -19,9 +19,10 @@ async function send_data() {
     switch (resp.status) {
         case 200:
             const data = await resp.json();
-            window.localStorage["drinks_mistakes"] = data["drinks_mistakes"];
-            window.localStorage["meal_mistakes"] = data["meal_mistakes"];
-            window.localStorage["cocktails_mistakes"] = data["cocktails_mistakes"];
+            // window.localStorage["drinks_mistakes"] = data["drinks_mistakes"];
+            // window.localStorage["meal_mistakes"] = data["meal_mistakes"];
+            // window.localStorage["cocktails_mistakes"] = data["cocktails_mistakes"];
+            window.localStorage.setItem("user_id", data["id"]);
             window.location = window.location.origin + "/main";
             break;
         case 401:

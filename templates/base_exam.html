@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Waiter Learning Program</title>
+    <link rel="stylesheet" href="../static/reset.css">
+    <link rel="stylesheet" href="../static/base_exam.css">
+</head>
+<body>
+    <div class="wrapper">
+        {% block title %}
+            <div class="header_bar">
+                <div class="count">
+                    <label class="count_label">1</label>
+                    <label class="count_label"> of </label>
+                    <label class="count_label">{{ max_count }}</label>
+                </div>
+                <button class="turn_back"></button>
+            </div>
+            <div class="header">
+                <div class="title">exam</div>
+                <div class="block">{{ section }}</div>
+                <div class="block">{{ name }}</div>
+                {% block addons %}{% endblock %}
+            </div>
+        {% endblock %}
+        {% block input_price %}
+            <label class="input_label">
+            Input price
+            <input type="number" class="block" id="input_price" required>
+            </label>
+        {% endblock %}
+        {% block content %}{% endblock %}
+        {% block sub_buttons %}
+        <button class="submit_btn">Submit</button>
+        {% endblock %}
+    </div>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

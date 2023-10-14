@@ -56,7 +56,7 @@ def guess_price(section: str) -> tuple:
     return state, resp
 
 
-def exam(section: str) -> tuple:
+def generate_exam(section: str) -> tuple:
     resp = list()
     state = "Error"
 
@@ -248,3 +248,16 @@ def match_quiz(section: str, type_: str, count: int) -> tuple:
                     })
 
     return state, resp
+
+
+state, exam_bar_data = generate_exam("bar")
+if state != "Success":
+    assert Exception
+
+state, exam_cocktails_data = generate_exam("cocktails")
+if state != "Success":
+    assert Exception
+
+state, exam_menu_data = generate_exam("menu")
+if state != "Success":
+    assert Exception

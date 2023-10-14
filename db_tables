@@ -1,4 +1,5 @@
 CREATE TABLE users (
+  id                    BIGINT,
   email                 VARCHAR(40),
   name                  VARCHAR(20),
   password              VARCHAR(20),
