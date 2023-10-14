@@ -8,7 +8,7 @@ print(db.create_user(user))
 print(db.sign_in(user.name, user.password))
 print(db.read_user(user.id))
 print(db.check_user(user.email))
-print(db.update_user(user.id, ("drinks_mistakes", [6, 7])))
+print(db.update_user(user.id, ("drinks_mistakes", 11)))
 print(db.read_user(user.id))
 
 

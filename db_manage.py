@@ -260,7 +260,7 @@ class DataBase:
         if self.connection:
             try:
                 self.cursor.execute(f"""
-                    UPDATE users SET {data[0]} = %(data)s
+                    UPDATE users SET {data[0]} = array_append({data[0]}, %(data)s)
                     WHERE id = %(id)s;
                 """, {"id": id_, "data": data[1]})
                 return "Success", 200
