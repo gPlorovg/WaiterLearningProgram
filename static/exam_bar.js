@@ -8,6 +8,11 @@ next_btn.classList.add("submit_btn");
 next_btn.textContent = "Next";
 next_btn.addEventListener("click", next);
 
+const curr_count = document.getElementById("curr_count");
+const section_ = document.getElementById("section");
+const name_ = document.getElementById("name");
+
+
 const inp_price = document.getElementById("input_price");
 const inp_volume = document.getElementById("input_volume");
 const radios = document.querySelectorAll(".radio");
@@ -40,19 +45,54 @@ function submit() {
             true_radio.style["borderColor"] = "#27A713";
         }
     }
-    sub_btn.insertAdjacentElement("afterend", next_btn);
+    if (!document.querySelector(".wrapper").contains(next_btn)) {
+        sub_btn.insertAdjacentElement("afterend", next_btn);
+    } else {
+        next_btn.style.display = "block";
+    }
     sub_btn.style.display = "none";
     if (ans_radio === true_radio) {
-        ans_radio.style["backgroundImage"] = 'url("../static/icons/radio_true_mark.svg")';
+        ans_radio.setAttribute("style", "background-image: url(\"../static/icons/radio_true_mark.svg\") !important;" +
+            "border-color: #27A713;")
     } else {
-        ans_radio.style["borderColor"] = "#E91515";
-        ans_radio.style["backgroundImage"] = 'url("../static/icons/radio_false_mark.svg")';
+        // ans_radio.style["borderColor"] = "#E91515";
+        ans_radio.setAttribute("style", "background-image: url(\"../static/icons/radio_false_mark.svg\") !important;" +
+            "border-color: #E91515;")
+        // ans_radio.style["backgroundImage"] = 'url("../static/icons/radio_false_mark.svg")';
         mistake = true;
     }
 }
 
-function next() {
-    const url = window.location.href + "?exam_count=" + window.localStorage["count"] + "&mistake=" + mistake
-        + "&user_id=" + window.localStorage["user_id"];
-    const resp = fetch(url);
+async function  next() {
+    let url = window.location.href + "?exam_count=" + window.localStorage["count"]
+    if (mistake && !(window.localStorage["drinks_mistakes"].includes(true_ans["id"]))) {
+        url += "&mistake=" + mistake + "&user_id=" + window.localStorage["user_id"];
+    }
+
+    const resp = await fetch(url);
+    if (resp.status === 200) {
+        const data = await resp.json();
+        update_page(data);
+        next_btn.style.display = "none";
+        sub_btn.style.display = "block";
+    }
+}
+
+function update_page(data) {
+    curr_count.textContent = data["count"];
+    section_.textContent = data["section"];
+    name_.textContent = data["name"];
+
+    inp_price.style["borderColor"] = "#1E1E1E";
+    inp_volume.style["borderColor"] = "#1E1E1E";
+    for (const r of radios) {
+        r.style["borderColor"] = "#1E1E1E";
+        r.style["backgroundImage"] = 'none';
+    }
+
+    for (const [i, r] of radios.entries()) {
+        r.parentElement.children[1].textContent = data["serving"][i];
+    }
+    window.localStorage["count"] = data["count"];
+    window.localStorage["true_ans"] = data["true_ans"];
 }

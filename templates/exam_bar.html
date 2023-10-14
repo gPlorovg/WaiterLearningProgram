@@ -11,7 +11,9 @@
         {% for serv in serving %}
             <label>
                 <input type="radio" class="radio" name="contact" value="{{ serv | short_value }}" checked/>
-                {{ serv }}
+                <text>
+                    {{ serv }}
+                </text>
             </label>
         {% endfor %}
     </div>
@@ -20,6 +22,7 @@
     <script>
         const true_ans_js =  {{ true_ans|tojson }};
         window.localStorage.setItem("true_ans", JSON.stringify(true_ans_js));
+        window.localStorage.setItem("count", {{ count }});
     </script>
     <script src="../static/exam_bar.js"></script>
 {% endblock %}

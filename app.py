@@ -74,7 +74,7 @@ def guess_price():
         return render_template("guess_price.html", title="guess_price", section=data["section"], name=data["name"],
                                prices=prices, true_ans=data["price"])
     else:
-        return make_response(500, state)
+        return make_response(state, 500)
 
 
 @app.template_filter("short_value")
@@ -94,7 +94,7 @@ def guess_serving():
         return render_template("guess_serving.html", title="guess_serving", section=data["section"], name=data["name"],
                                serving=serving, true_ans=short_value(data["serving"]))
     else:
-        return make_response(500, state)
+        return make_response(state, 500)
 
 
 @app.get("/cocktails/guess_ingredients")
@@ -107,7 +107,7 @@ def guess_ingredients():
                                name=data["name"], ingredients=ingredients, true_ans=data["ingredients"],
                                img_path=data["img_path"])
     else:
-        return make_response(500, state)
+        return make_response(state, 500)
 
 
 @app.get("/bar/match_price")
@@ -128,26 +128,45 @@ def match_quiz():
     if state == "Success":
         return render_template(template_name, title="match_" + type_, items=items, true_ans=data, type=type_)
     else:
-        return make_response(500, state)
+        return make_response(state, 500)
 
 
 @app.get("/bar/exam")
 def exam_bar():
-    count = 0 if not request.args.get("exam_count") else request.args.get("exam_count")
-    count += 1
-    user_id = int(request.args.get("user_id"))
-    mistake = bool(request.args.get("mistake"))
-    if mistake:
-        pass # user mistakes add
+    if not request.args.get("exam_count"):
+        count = 1
+        data = games.exam_bar_data[count]
+        max_count = len(games.exam_bar_data)
+        serving = data["wrong_serving"].copy()
+        serving.append(data["serving"])
+        shuffle(serving)
+        data["serving_short"] = short_value(data["serving"])
+        return render_template("exam_bar.html", section=data["section"], name=data["name"], serving=serving,
+                               true_ans=data, count=count, max_count=max_count)
+    else:
+        count = int(request.args.get("exam_count")) + 1
 
-    data = games.exam_bar_data[count]
-    max_count = len(games.exam_bar_data)
-    serving = data["wrong_serving"].copy()
-    serving.append(data["serving"])
-    shuffle(serving)
-    data["serving_short"] = short_value(data["serving"])
-    return render_template("exam_bar.html", id=data["id"], section=data["section"], name=data["name"], serving=serving,
-                           true_ans=data, count=count, max_count=max_count)
+        if request.args.get("user_id"):
+            user_id = int(request.args.get("user_id"))
+            mistake = bool(request.args.get("mistake"))
+            if mistake:
+                db.update_user(user_id, ("drinks_mistakes", games.exam_bar_data[count]["id"]))
+
+        data = games.exam_bar_data[count]
+        max_count = len(games.exam_bar_data)
+        serving = data["wrong_serving"].copy()
+        serving.append(data["serving"])
+        shuffle(serving)
+        data["serving_short"] = short_value(data["serving"])
+        resp = {
+            "count": count,
+            "section": data["section"],
+            "name": data["name"],
+            "serving": serving,
+            "true_ans": data
+        }
+        return make_response(resp, 200)
+
 
 
 # @app.get("/cocktails/exam")

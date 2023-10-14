@@ -2,6 +2,7 @@
 input check if not a number (type number instead text)
 exam data do not update in wrong answers!
 user can be not logged problem!
-load mistakes in work on mistakes quiz
+//load mistakes in work on mistakes quiz
+python copy reference list problem
 create user interface
 update user mistakes problem

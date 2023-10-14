@@ -44,7 +44,7 @@ body {
 }
 
 .radio:checked {
-    background-image: url("../static/icons/radio_no_mark.svg");
+    background-image: url("../static/icons/radio_no_mark.svg")!important;
 }
 
 .checkbox_container{
@@ -72,7 +72,7 @@ body {
 }
 
 .checkbox:checked {
-    background-image: url("../static/icons/checkbox_no_mark.svg");
+    background-image: url("../static/icons/checkbox_no_mark.svg")!important;
 }
 
 
