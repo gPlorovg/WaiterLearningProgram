@@ -95,7 +95,9 @@ function update_page(data) {
     name_.textContent = data["name"];
 
     inp_price.style["borderColor"] = "#1E1E1E";
+    inp_price.value = "";
     inp_volume.style["borderColor"] = "#1E1E1E";
+    inp_volume.value = "";
     for (const r of radios) {
         r.style["borderColor"] = "#1E1E1E";
         r.style["backgroundImage"] = 'none';

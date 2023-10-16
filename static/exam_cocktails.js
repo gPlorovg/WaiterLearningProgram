@@ -83,6 +83,7 @@ function update_page(data) {
     name_.textContent = data["name"];
 
     inp_price.style["borderColor"] = "#1E1E1E";
+    inp_price.value = "";
     for (const c of Array.from(check_container.children)) {
         c.style["borderColor"] = "#1E1E1E";
         c.style["backgroundImage"] = 'none';

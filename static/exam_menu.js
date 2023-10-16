@@ -87,6 +87,7 @@ function update_page(data) {
     name_.textContent = data["name"];
 
     inp_price.style["borderColor"] = "#1E1E1E";
+    inp_price.value = "";
     description.textContent = data["description"];
     for (const r of radios) {
         r.style["borderColor"] = "#1E1E1E";
