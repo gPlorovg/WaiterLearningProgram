@@ -57,11 +57,8 @@ function submit() {
 }
 
 async function  next() {
-    results[parseInt(curr_count.textContent)] = !mistake;
-    let url = window.location.href + "?exam_count=" + window.localStorage["count"]
-    if (mistake && !(window.localStorage["drinks_mistakes"].includes(true_ans["id"]))) {
-        url += "&mistake=" + mistake + "&user_id=" + window.localStorage["user_id"];
-    }
+    let url = window.location.href + "?exam_count=" + window.localStorage["count"];
+    url = check_mistake(url);
     const resp = await fetch(url);
     if (resp.status === 200) {
         const data = await resp.json();
@@ -104,7 +101,7 @@ function update_page(data) {
 }
 
 async function complete() {
-    results[curr_count.textContent] = !mistake;
+    check_mistake("");
     const resp = await fetch(window.origin + "/result", {
         method: "POST",
         headers: {
@@ -115,4 +112,15 @@ async function complete() {
     if (resp.status === 200) {
         document.body.innerHTML = await resp.text();
     }
+}
+
+function check_mistake(url="") {
+    let meal_mis = JSON.parse(window.localStorage["meal_mistakes"]);
+    results[parseInt(curr_count.textContent)] = !mistake;
+    if (mistake && !(meal_mis.includes(true_ans["id"]))) {
+        url += "&mistake=" + mistake + "&user_id=" + window.localStorage["user_id"];
+        meal_mis.push(true_ans["id"]);
+        window.localStorage["meal_mistakes"] = JSON.stringify(meal_mis);
+    }
+    return url;
 }
