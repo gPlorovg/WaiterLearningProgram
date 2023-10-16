@@ -171,6 +171,45 @@ def exam_bar():
             return make_response(resp, 200)
 
 
+@app.get("/cocktails/exam")
+def exam_cocktails():
+    max_count = len(games.exam_cocktails_data)
+    count = 1
+    if not request.args.get("exam_count"):
+        data = games.exam_cocktails_data[count - 1]
+        ingredients = data["wrong_ingredients"].copy()
+        ingredients += data["ingredients"]
+        shuffle(ingredients)
+        return render_template("exam_cocktails.html", section=data["section"], name=data["name"],
+                               img_path=data["img_path"], true_ans=data, count=count, max_count=max_count,
+                               ingredients=ingredients)
+    else:
+        count = int(request.args.get("exam_count"))
+        if request.args.get("user_id"):
+            user_id = int(request.args.get("user_id"))
+            mistake = bool(request.args.get("mistake"))
+            if mistake:
+                db.update_user(user_id, ("cocktails_mistakes", games.exam_cocktails_data[count - 1]["id"]))
+
+        count += 1
+
+        data = games.exam_cocktails_data[count - 1]
+        ingredients = data["wrong_ingredients"].copy()
+        ingredients += data["ingredients"]
+        shuffle(ingredients)
+        resp = {
+            "count": count,
+            "section": data["section"],
+            "name": data["name"],
+            "ingredients": ingredients,
+            "true_ans": data
+        }
+        if count == max_count:
+            return make_response(resp, 201)
+        else:
+            return make_response(resp, 200)
+
+
 @app.post("/result")
 def show_result():
     results = request.json

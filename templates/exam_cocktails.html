@@ -1,0 +1,24 @@
+{% extends "base_exam.html" %}
+{% block content %}
+    <label class="sub_title">
+        Choose ingredients
+    </label>
+    <div class="checkbox_container">
+        {% for ing in ingredients %}
+            <label>
+                <input type="checkbox" class="checkbox" value="{{ ing }}"/>
+                <text>
+                    {{ ing }}
+                </text>
+            </label>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        const true_ans_js =  {{ true_ans|tojson }};
+        window.localStorage.setItem("true_ans", JSON.stringify(true_ans_js));
+        window.localStorage.setItem("count", {{ count }});
+    </script>
+    <script src="../static/exam_cocktails.js"></script>
+{% endblock %}
