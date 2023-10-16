@@ -101,7 +101,7 @@ function update_page(data) {
 
 async function complete() {
     // check_mistake("");
-    const resp = await fetch(window.origin + "/result", {
+    const resp = await fetch(window.origin + "/wlp" + "/result", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
