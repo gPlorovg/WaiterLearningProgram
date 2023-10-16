@@ -1,12 +1,6 @@
-!!!new menu meal
-input check if not a number (type number instead text)
-exam data do not update in wrong answers!
-user can be not logged problem!
-//load mistakes in work on mistakes quiz
+NO - input check if not a number (type number instead text)
+NO - user can be not logged problem!
 //python copy reference list problem
-манка problem!
-
-save stage of mistake for exam results
-
-create user interface
-update user mistakes problem
+NO - манка problem!
+NO - add section to match quiz
+NO - save stage of mistake for exam results

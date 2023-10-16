@@ -257,22 +257,22 @@ def exam_menu():
             return make_response(resp, 200)
 
 
-@app.get("/bar/mistakes")
-def mistakes_bar():
-    max_count = int(request.args.get("mistakes_count"))
-    user_id = int(request.args.get("user_id"))
-    user = db.read_user(user_id)
-    if request.args.get("mistake_id"):
-        mistake_id = int(request.args.get("mistake_id"))
-        db.delete_user_mistakes(user_id, ("drinks_mistakes", mistake_id))
-
-    state, data = games.mistakes("bar", user.drinks_mistakes)
-    serving = data["wrong_serving"].copy()
-    serving.append(data["serving"])
-    shuffle(serving)
-    data["serving_short"] = short_value(data["serving"])
-    return render_template("exam_bar.html", title="bar mistakes", section=data["section"], name=data["name"],
-                           serving=serving, true_ans=data, count=count, max_count=max_count)
+# @app.get("/bar/mistakes")
+# def mistakes_bar():
+#     max_count = int(request.args.get("mistakes_count"))
+#     user_id = int(request.args.get("user_id"))
+#     user = db.read_user(user_id)
+#     if request.args.get("mistake_id"):
+#         mistake_id = int(request.args.get("mistake_id"))
+#         db.delete_user_mistakes(user_id, ("drinks_mistakes", mistake_id))
+#
+#     state, data = games.mistakes("bar", user.drinks_mistakes)
+#     serving = data["wrong_serving"].copy()
+#     serving.append(data["serving"])
+#     shuffle(serving)
+#     data["serving_short"] = short_value(data["serving"])
+#     return render_template("exam_bar.html", title="bar mistakes", section=data["section"], name=data["name"],
+#                            serving=serving, true_ans=data, count=count, max_count=max_count)
 
 
 
@@ -280,40 +280,6 @@ def mistakes_bar():
 def show_result():
     results = request.json
     return render_template("exam_result.html", results=results)
-
-# @app.get("/cocktails/exam")
-# def exam_cocktails():
-#     state, data = games.exam(section)
-#     match section:
-#         case "bar":
-#             max_count = len(db.all_drinks_id)
-#         case "cocktails":
-#             max_count = len(db.all_cocktails_id)
-#         case "menu":
-#             max_count = len(db.all_meals_id)
-#     if state == "Success":
-#         return render_template(template_name, title="exam", section=data[section], name=data["name"],
-#                                max_count=max_count,)
-#     else:
-#         return make_response(500, state)
-#
-#
-# @app.get("/menu/exam")
-# def exam_menu():
-#     state, data = games.exam(section)
-#     match section:
-#         case "bar":
-#             max_count = len(db.all_drinks_id)
-#         case "cocktails":
-#             max_count = len(db.all_cocktails_id)
-#         case "menu":
-#             max_count = len(db.all_meals_id)
-#     if state == "Success":
-#         return render_template(template_name, title="exam", section=data[section], name=data["name"],
-#                                max_count=max_count,)
-#     else:
-#         return make_response(500, state)
-#
 
 
 @app.get("/error")
