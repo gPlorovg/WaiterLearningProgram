@@ -210,6 +210,50 @@ def exam_cocktails():
             return make_response(resp, 200)
 
 
+@app.get("/menu/exam")
+def exam_menu():
+    max_count = len(games.exam_menu_data)
+    count = 1
+    if not request.args.get("exam_count"):
+        data = games.exam_menu_data[count - 1]
+        serving = data["wrong_serving"].copy()
+        serving.append(data["serving"])
+        shuffle(serving)
+        data["serving_short"] = short_value(data["serving"])
+        return render_template("exam_menu.html", section=data["section"], name=data["name"], serving=serving,
+                               true_ans=data, count=count, max_count=max_count, description=data["description"])
+    else:
+        count = int(request.args.get("exam_count"))
+        if request.args.get("user_id"):
+            user_id = int(request.args.get("user_id"))
+            mistake = bool(request.args.get("mistake"))
+            if mistake:
+                db.update_user(user_id, ("drinks_mistakes", games.exam_menu_data[count - 1]["id"]))
+
+        count += 1
+
+        data = games.exam_menu_data[count - 1]
+        serving = data["wrong_serving"].copy()
+        serving.append(data["serving"])
+        shuffle(serving)
+
+        serving = {short_value(key): key for key in serving}
+
+        data["serving_short"] = short_value(data["serving"])
+        resp = {
+            "count": count,
+            "section": data["section"],
+            "name": data["name"],
+            "serving": serving,
+            "true_ans": data,
+            "description": data["description"]
+        }
+        if count == max_count:
+            return make_response(resp, 201)
+        else:
+            return make_response(resp, 200)
+
+
 @app.post("/result")
 def show_result():
     results = request.json

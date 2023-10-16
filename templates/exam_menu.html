@@ -1,0 +1,29 @@
+{% extends "base_exam.html" %}
+{% block addons %}
+    <p class="description">
+        {{ description }}
+    </p>
+{% endblock %}
+{% block content %}
+    <label class="sub_title">
+        Choose serving
+    </label>
+    <div class="radio_box">
+        {% for serv in serving %}
+            <label>
+                <input type="radio" class="radio" name="contact" value="{{ serv | short_value }}" checked/>
+                <text>
+                    {{ serv }}
+                </text>
+            </label>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        const true_ans_js =  {{ true_ans|tojson }};
+        window.localStorage.setItem("true_ans", JSON.stringify(true_ans_js));
+        window.localStorage.setItem("count", {{ count }});
+    </script>
+    <script src="../static/exam_menu.js"></script>
+{% endblock %}
