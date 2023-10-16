@@ -48,7 +48,7 @@ def main():
 @app.get("/cocktails")
 @app.get("/menu")
 def quizzies_list():
-    mistakes_count = int(request.args.get("mistakes_count"))
+    # mistakes_count = int(request.args.get("mistakes_count"))
     names = list()
     if request.path == "/bar":
         names = ["guess_serving", "match_price", "match_volume"]
@@ -58,7 +58,7 @@ def quizzies_list():
         names = ["guess_serving", "match_price"]
     title = request.path.lstrip("/")
     title = title[0].upper() + title[1:]
-    return render_template("quizzies_list.html", title=title, names=names, mistakes_count=mistakes_count)
+    return render_template("quizzies_list.html", title=title, names=names)
 
 
 @app.get("/bar/guess_price")
@@ -145,11 +145,11 @@ def exam_bar():
                                true_ans=data, count=count, max_count=max_count)
     else:
         count = int(request.args.get("exam_count"))
-        if request.args.get("user_id"):
-            user_id = int(request.args.get("user_id"))
-            mistake = bool(request.args.get("mistake"))
-            if mistake:
-                db.add_user_mistakes(user_id, ("drinks_mistakes", games.exam_bar_data[count - 1]["id"]))
+        # if request.args.get("user_id"):
+        #     user_id = int(request.args.get("user_id"))
+        #     mistake = bool(request.args.get("mistake"))
+        #     if mistake:
+        #         db.add_user_mistakes(user_id, ("drinks_mistakes", games.exam_bar_data[count - 1]["id"]))
 
         count += 1
 
@@ -188,11 +188,11 @@ def exam_cocktails():
                                ingredients=ingredients)
     else:
         count = int(request.args.get("exam_count"))
-        if request.args.get("user_id"):
-            user_id = int(request.args.get("user_id"))
-            mistake = bool(request.args.get("mistake"))
-            if mistake:
-                db.add_user_mistakes(user_id, ("cocktails_mistakes", games.exam_cocktails_data[count - 1]["id"]))
+        # if request.args.get("user_id"):
+        #     user_id = int(request.args.get("user_id"))
+        #     mistake = bool(request.args.get("mistake"))
+        #     if mistake:
+        #         db.add_user_mistakes(user_id, ("cocktails_mistakes", games.exam_cocktails_data[count - 1]["id"]))
 
         count += 1
 
@@ -227,11 +227,11 @@ def exam_menu():
                                true_ans=data, count=count, max_count=max_count, description=data["description"])
     else:
         count = int(request.args.get("exam_count"))
-        if request.args.get("user_id"):
-            user_id = int(request.args.get("user_id"))
-            mistake = bool(request.args.get("mistake"))
-            if mistake:
-                db.add_user_mistakes(user_id, ("meal_mistakes", games.exam_menu_data[count - 1]["id"]))
+        # if request.args.get("user_id"):
+        #     user_id = int(request.args.get("user_id"))
+        #     mistake = bool(request.args.get("mistake"))
+        #     if mistake:
+        #         db.add_user_mistakes(user_id, ("meal_mistakes", games.exam_menu_data[count - 1]["id"]))
 
         count += 1
 
@@ -288,4 +288,4 @@ def error():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0", port=2005)
