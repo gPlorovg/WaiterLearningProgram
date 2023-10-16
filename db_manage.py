@@ -404,8 +404,8 @@ class DataBase:
 
 
 load_dotenv()
-USER = getenv("USER")
+# USER = getenv("USER")
 HOST = getenv("HOST")
 DB_PASSWORD = getenv("DB_PASSWORD")
 
-db = DataBase("WaiterLearningProgram_db", USER, HOST, DB_PASSWORD)
+db = DataBase("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
