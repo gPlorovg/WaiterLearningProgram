@@ -256,11 +256,28 @@ class DataBase:
             print("Data Base doesn't connected")
             return "Error", 503
 
-    def update_user(self, id_: int, data: tuple) -> tuple:
+    def add_user_mistakes(self, id_: int, data: tuple) -> tuple:
         if self.connection:
             try:
                 self.cursor.execute(f"""
                     UPDATE users SET {data[0]} = array_append({data[0]}, %(data)s)
+                    WHERE id = %(id)s;
+                """, {"id": id_, "data": data[1]})
+                self.commit()
+                return "Success", 200
+            except pg.ProgrammingError as e:
+                error_print(e)
+                self.connection.rollback()
+                return "Error", 500
+        else:
+            print("Data Base doesn't connected")
+            return "Error", 503
+
+    def delete_user_mistakes(self, id_: int, data: tuple) -> tuple:
+        if self.connection:
+            try:
+                self.cursor.execute(f"""
+                    UPDATE users SET {data[0]} = array_remove({data[0]}, %(data)s)
                     WHERE id = %(id)s;
                 """, {"id": id_, "data": data[1]})
                 self.commit()

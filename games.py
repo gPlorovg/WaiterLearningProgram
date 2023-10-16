@@ -105,48 +105,45 @@ def generate_exam(section: str) -> tuple:
     return state, resp
 
 
-def mistakes(section: str, mistakes_id: list) -> tuple:
-    resp = list()
+def mistakes(section: str, mistake_id: int) -> tuple:
+    resp = dict()
     state = "Error"
 
     match section:
         case "bar":
-            for id_ in mistakes_id:
-                obj = db.read_drink(id_)
-                resp.append({
-                    "id": id_,
-                    "section": obj.section,
-                    "name": obj.name,
-                    "price": obj.price,
-                    "volume": obj.volume,
-                    "wrong_volumes": get_wrong_ans(section, "volume", obj.volume, 3),
-                    "serving": obj.serving,
-                    "wrong_serving": get_wrong_ans(section, "serving", obj.serving, 3)
-                })
+            obj = db.read_drink(mistake_id)
+            resp = {
+                "id": mistake_id,
+                "section": obj.section,
+                "name": obj.name,
+                "price": obj.price,
+                "volume": obj.volume,
+                "wrong_volumes": get_wrong_ans(section, "volume", obj.volume, 3),
+                "serving": obj.serving,
+                "wrong_serving": get_wrong_ans(section, "serving", obj.serving, 3)
+            }
         case "cocktails":
-            for id_ in mistakes_id:
-                obj = db.read_cocktail(id_)
-                resp.append({
-                    "id": id_,
-                    "section": obj.section,
-                    "name": obj.name,
-                    "img_path": obj.img_path,
-                    "price": obj.price,
-                    "ingredients": obj.ingredients,
-                    "wrong_ingredients": get_wrong_ans(section, "ingredients", obj.ingredients, 3)
-                })
+            obj = db.read_cocktail(mistake_id)
+            resp = {
+                "id": mistake_id,
+                "section": obj.section,
+                "name": obj.name,
+                "img_path": obj.img_path,
+                "price": obj.price,
+                "ingredients": obj.ingredients,
+                "wrong_ingredients": get_wrong_ans(section, "ingredients", obj.ingredients, 3)
+            }
         case "menu":
-            for id_ in mistakes_id:
-                obj = db.read_meal(id_)
-                resp.append({
-                    "id": id_,
-                    "section": obj.section,
-                    "name": obj.name,
-                    "description": obj.description,
-                    "price": obj.price,
-                    "serving": obj.serving,
-                    "wrong_serving": get_wrong_ans(section, "serving", obj.serving, 3)
-                })
+            obj = db.read_meal(mistake_id)
+            resp = {
+                "id": mistake_id,
+                "section": obj.section,
+                "name": obj.name,
+                "description": obj.description,
+                "price": obj.price,
+                "serving": obj.serving,
+                "wrong_serving": get_wrong_ans(section, "serving", obj.serving, 3)
+            }
 
     if resp:
         state = "Success"

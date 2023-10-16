@@ -149,7 +149,7 @@ def exam_bar():
             user_id = int(request.args.get("user_id"))
             mistake = bool(request.args.get("mistake"))
             if mistake:
-                db.update_user(user_id, ("drinks_mistakes", games.exam_bar_data[count - 1]["id"]))
+                db.add_user_mistakes(user_id, ("drinks_mistakes", games.exam_bar_data[count - 1]["id"]))
 
         count += 1
 
@@ -192,7 +192,7 @@ def exam_cocktails():
             user_id = int(request.args.get("user_id"))
             mistake = bool(request.args.get("mistake"))
             if mistake:
-                db.update_user(user_id, ("cocktails_mistakes", games.exam_cocktails_data[count - 1]["id"]))
+                db.add_user_mistakes(user_id, ("cocktails_mistakes", games.exam_cocktails_data[count - 1]["id"]))
 
         count += 1
 
@@ -231,7 +231,7 @@ def exam_menu():
             user_id = int(request.args.get("user_id"))
             mistake = bool(request.args.get("mistake"))
             if mistake:
-                db.update_user(user_id, ("drinks_mistakes", games.exam_menu_data[count - 1]["id"]))
+                db.add_user_mistakes(user_id, ("meal_mistakes", games.exam_menu_data[count - 1]["id"]))
 
         count += 1
 
@@ -255,6 +255,25 @@ def exam_menu():
             return make_response(resp, 201)
         else:
             return make_response(resp, 200)
+
+
+@app.get("/bar/mistakes")
+def mistakes_bar():
+    max_count = int(request.args.get("mistakes_count"))
+    user_id = int(request.args.get("user_id"))
+    user = db.read_user(user_id)
+    if request.args.get("mistake_id"):
+        mistake_id = int(request.args.get("mistake_id"))
+        db.delete_user_mistakes(user_id, ("drinks_mistakes", mistake_id))
+
+    state, data = games.mistakes("bar", user.drinks_mistakes)
+    serving = data["wrong_serving"].copy()
+    serving.append(data["serving"])
+    shuffle(serving)
+    data["serving_short"] = short_value(data["serving"])
+    return render_template("exam_bar.html", title="bar mistakes", section=data["section"], name=data["name"],
+                           serving=serving, true_ans=data, count=count, max_count=max_count)
+
 
 
 @app.post("/result")
