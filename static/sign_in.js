@@ -24,14 +24,14 @@ async function send_data() {
             window.localStorage["meal_mistakes"] = JSON.stringify(data["meal_mistakes"]);
             window.localStorage["cocktails_mistakes"] = JSON.stringify(data["cocktails_mistakes"]);
             window.localStorage.setItem("user_id", data["id"]);
-            window.location = window.location.origin + "/wlp" + "/main";
+            window.location = window.location.origin + "/main";
             break;
         case 401:
             error(name_);
             error(password_);
             break;
         default:
-            window.location = window.location.origin + "/wlp" + "/error" + "?status_code=" + resp.status;
+            window.location = window.location.origin + "/error" + "?status_code=" + resp.status;
             break;
     }
 }

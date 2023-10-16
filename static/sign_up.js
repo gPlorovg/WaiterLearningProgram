@@ -20,13 +20,13 @@ async function send_data() {
 
     switch (resp.status) {
         case 200:
-            window.location = window.location.origin + "/wlp";
+            window.location = window.location.origin;
             break;
         case 409:
             error(email_);
             break;
         default:
-            window.location = window.location.origin + "/wlp" + "/error" + "?status_code=" + resp.status;
+            window.location = window.location.origin + "/error" + "?status_code=" + resp.status;
             break;
     }
 }
