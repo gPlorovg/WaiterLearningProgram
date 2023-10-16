@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Waiter Learning Program</title>
+    <link rel="stylesheet" href="../static/reset.css">
+    <link rel="stylesheet" href="../static/exam_result.css">
+</head>
+<body>
+    <div class="wrapper">
+        {% block title %}
+            <button class="turn_back" onclick="history.back();"></button>
+            <div class="title">exam</div>
+        {% endblock %}
+        {% block content %}
+            <div class="results_container">
+                {% for key, value in results.items() %}
+                    <div class="block result_{{ value }}">{{ key }}</div>
+                {% endfor %}
+            </div>
+        {% endblock %}
+        {% block sub_buttons %}
+        <button class="submit_btn" onclick="window.location.reload();">Retry</button>
+        {% endblock %}
+    </div>
+</body>
+</html>
