@@ -54,7 +54,7 @@ function submit() {
 
 async function  next() {
     let url = window.location.href + "?exam_count=" + window.localStorage["count"];
-    url = check_mistake(url);
+    // url = check_mistake(url);
     const resp = await fetch(url);
     if (resp.status === 200) {
         const data = await resp.json();
@@ -100,7 +100,7 @@ function update_page(data) {
 }
 
 async function complete() {
-    check_mistake("");
+    // check_mistake("");
     const resp = await fetch(window.origin + "/result", {
         method: "POST",
         headers: {
@@ -113,13 +113,13 @@ async function complete() {
     }
 }
 
-function check_mistake(url="") {
-    let cocktails_mis = JSON.parse(window.localStorage["cocktails_mistakes"]);
-    results[parseInt(curr_count.textContent)] = !mistake;
-    if (mistake && !(cocktails_mis.includes(true_ans["id"]))) {
-        url += "&mistake=" + mistake + "&user_id=" + window.localStorage["user_id"];
-        cocktails_mis.push(true_ans["id"]);
-        window.localStorage["cocktails_mistakes"] = JSON.stringify(cocktails_mis);
-    }
-    return url;
-}
+// function check_mistake(url="") {
+//     let cocktails_mis = JSON.parse(window.localStorage["cocktails_mistakes"]);
+//     results[parseInt(curr_count.textContent)] = !mistake;
+//     if (mistake && !(cocktails_mis.includes(true_ans["id"]))) {
+//         url += "&mistake=" + mistake + "&user_id=" + window.localStorage["user_id"];
+//         cocktails_mis.push(true_ans["id"]);
+//         window.localStorage["cocktails_mistakes"] = JSON.stringify(cocktails_mis);
+//     }
+//     return url;
+// }
