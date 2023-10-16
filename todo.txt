@@ -5,7 +5,7 @@ user can be not logged problem!
 //load mistakes in work on mistakes quiz
 //python copy reference list problem
 манка problem!
-mistakes count
+
 save stage of mistake for exam results
 
 create user interface

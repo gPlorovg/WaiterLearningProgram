@@ -286,6 +286,7 @@ class DataBase:
             else:
                 data = self.cursor.fetchone()
                 if data:
+                    data = [el if el is not None else [] for el in data]
                     return {"id": data[0], "drinks_mistakes": data[1], "meal_mistakes": data[2],
                             "cocktails_mistakes": data[3]}, 200
                 else:

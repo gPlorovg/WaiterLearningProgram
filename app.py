@@ -47,7 +47,8 @@ def main():
 @app.get("/bar")
 @app.get("/cocktails")
 @app.get("/menu")
-def task_list():
+def quizzies_list():
+    mistakes_count = int(request.args.get("mistakes_count"))
     names = list()
     if request.path == "/bar":
         names = ["guess_serving", "match_price", "match_volume"]
@@ -57,8 +58,7 @@ def task_list():
         names = ["guess_serving", "match_price"]
     title = request.path.lstrip("/")
     title = title[0].upper() + title[1:]
-
-    return render_template("quizzies_list.html", title=title, names=names)
+    return render_template("quizzies_list.html", title=title, names=names, mistakes_count=mistakes_count)
 
 
 @app.get("/bar/guess_price")
