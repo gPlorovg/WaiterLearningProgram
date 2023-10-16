@@ -133,10 +133,10 @@ def match_quiz():
 
 @app.get("/bar/exam")
 def exam_bar():
+    max_count = len(games.exam_bar_data)
+    count = 1
     if not request.args.get("exam_count"):
-        count = 1
-        data = games.exam_bar_data[count]
-        max_count = len(games.exam_bar_data)
+        data = games.exam_bar_data[count - 1]
         serving = data["wrong_serving"].copy()
         serving.append(data["serving"])
         shuffle(serving)
@@ -144,16 +144,16 @@ def exam_bar():
         return render_template("exam_bar.html", section=data["section"], name=data["name"], serving=serving,
                                true_ans=data, count=count, max_count=max_count)
     else:
-        count = int(request.args.get("exam_count")) + 1
-
+        count = int(request.args.get("exam_count"))
         if request.args.get("user_id"):
             user_id = int(request.args.get("user_id"))
             mistake = bool(request.args.get("mistake"))
             if mistake:
-                db.update_user(user_id, ("drinks_mistakes", games.exam_bar_data[count]["id"]))
+                db.update_user(user_id, ("drinks_mistakes", games.exam_bar_data[count - 1]["id"]))
 
-        data = games.exam_bar_data[count]
-        max_count = len(games.exam_bar_data)
+        count += 1
+
+        data = games.exam_bar_data[count - 1]
         serving = data["wrong_serving"].copy()
         serving.append(data["serving"])
         shuffle(serving)
@@ -165,9 +165,16 @@ def exam_bar():
             "serving": serving,
             "true_ans": data
         }
-        return make_response(resp, 200)
+        if count == max_count:
+            return make_response(resp, 201)
+        else:
+            return make_response(resp, 200)
 
 
+@app.post("/result")
+def show_result():
+    results = request.json
+    return render_template("exam_result.html", results=results)
 
 # @app.get("/cocktails/exam")
 # def exam_cocktails():

@@ -18,6 +18,7 @@ const inp_volume = document.getElementById("input_volume");
 const radios = document.querySelectorAll(".radio");
 const true_ans = JSON.parse(window.localStorage["true_ans"]);
 let mistake = false;
+let results = {};
 function submit() {
     if (parseInt(inp_price.value) === true_ans["price"]) {
         inp_price.style["borderColor"] = "#27A713";
@@ -64,17 +65,27 @@ function submit() {
 }
 
 async function  next() {
+    results[parseInt(curr_count.textContent)] = !mistake;
     let url = window.location.href + "?exam_count=" + window.localStorage["count"]
     if (mistake && !(window.localStorage["drinks_mistakes"].includes(true_ans["id"]))) {
         url += "&mistake=" + mistake + "&user_id=" + window.localStorage["user_id"];
     }
-
     const resp = await fetch(url);
     if (resp.status === 200) {
         const data = await resp.json();
         update_page(data);
         next_btn.style.display = "none";
         sub_btn.style.display = "block";
+    } else if (resp.status === 201) {
+        const data = await resp.json();
+        update_page(data);
+
+        const complete_btn = document.createElement("button");
+        complete_btn.classList.add("submit_btn");
+        complete_btn.textContent = "Complete";
+        complete_btn.addEventListener("click", complete);
+        next_btn.insertAdjacentElement("afterend", complete_btn);
+        next_btn.style.display = "none";
     }
 }
 
@@ -95,4 +106,18 @@ function update_page(data) {
     }
     window.localStorage["count"] = data["count"];
     window.localStorage["true_ans"] = data["true_ans"];
+}
+
+async function complete() {
+    results[curr_count.textContent] = !mistake;
+    const resp = await fetch(window.origin + "/result", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(results)
+    });
+    if (resp.status === 200) {
+        document.body.innerHTML = await resp.text();
+    }
 }
