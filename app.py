@@ -11,9 +11,9 @@ app = Flask(__name__)
 
 # STATUS CODES: 200 - user not in db, 409- user already exists, 500- req_db error, 503 - db doesn't connected
 # 401 - user doesn't exist
-@app.route("/")
-def index():  # put application's code here
-    return render_template("index.html")
+# @app.route("/")
+# def index():  # put application's code here
+#     return render_template("index.html")
 
 
 @app.route("/sign_up", methods=["GET", "POST"])
@@ -39,7 +39,8 @@ def sign_in():
     return make_response(resp)
 
 
-@app.get("/main")
+# @app.get("/main")
+@app.get("/")
 def main():
     return render_template("main.html")
 
