@@ -263,6 +263,7 @@ class DataBase:
                     UPDATE users SET {data[0]} = array_append({data[0]}, %(data)s)
                     WHERE id = %(id)s;
                 """, {"id": id_, "data": data[1]})
+                self.commit()
                 return "Success", 200
             except pg.ProgrammingError as e:
                 error_print(e)
