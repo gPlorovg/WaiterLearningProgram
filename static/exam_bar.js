@@ -16,7 +16,7 @@ const name_ = document.getElementById("name");
 const inp_price = document.getElementById("input_price");
 const inp_volume = document.getElementById("input_volume");
 const radios = document.querySelectorAll(".radio");
-const true_ans = JSON.parse(window.localStorage["true_ans"]);
+let true_ans = JSON.parse(window.localStorage["true_ans"]);
 let mistake = false;
 let results = {};
 function submit() {
@@ -102,10 +102,13 @@ function update_page(data) {
     }
 
     for (const [i, r] of radios.entries()) {
-        r.parentElement.children[1].textContent = data["serving"][i];
+        const key = Object.keys(data["serving"])[i];
+        r.value = key;
+        r.parentElement.children[1].textContent = data["serving"][key];
     }
     window.localStorage["count"] = data["count"];
     window.localStorage["true_ans"] = data["true_ans"];
+    true_ans = data["true_ans"];
 }
 
 async function complete() {

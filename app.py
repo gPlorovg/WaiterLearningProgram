@@ -157,6 +157,9 @@ def exam_bar():
         serving = data["wrong_serving"].copy()
         serving.append(data["serving"])
         shuffle(serving)
+
+        serving = {short_value(key): key for key in serving}
+
         data["serving_short"] = short_value(data["serving"])
         resp = {
             "count": count,
