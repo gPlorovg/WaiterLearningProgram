@@ -1,10 +1,17 @@
-import json
-
-from flask import Flask, render_template, make_response, request
+# import json
+from os import getenv
 from random import shuffle
+from dotenv import load_dotenv
+from flask import Flask, render_template, make_response, request
 from db_manage import db
-from Objects import User
+# from Objects import User
 import games
+
+
+load_dotenv()
+# USER = getenv("USER")
+HOST = getenv("HOST")
+DB_PASSWORD = getenv("DB_PASSWORD")
 
 app = Flask(__name__)
 
@@ -68,6 +75,13 @@ def quizzies_list():
 def guess_price():
     section = request.path.split("/")[1]
     state, data = games.guess_price(section)
+
+    i = 0
+    while state != "Success" and i < 3:
+        db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
+        state, data = games.guess_price(section)
+        i += 1
+
     prices = data["wrong_prices"]
     prices.append(data["price"])
     shuffle(prices)
@@ -88,6 +102,13 @@ def short_value(s: str) -> str:
 def guess_serving():
     section = request.path.split("/")[1]
     state, data = games.guess_serving(section)
+
+    i = 0
+    while state != "Success" and i < 3:
+        db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
+        state, data = games.guess_serving(section)
+        i += 1
+
     serving = data["wrong_serving"]
     serving.append(data["serving"])
     shuffle(serving)
@@ -101,6 +122,13 @@ def guess_serving():
 @app.get("/cocktails/guess_ingredients")
 def guess_ingredients():
     state, data = games.guess_ingredients()
+
+    i = 0
+    while state != "Success" and i < 3:
+        db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
+        state, data = games.guess_ingredients()
+        i += 1
+
     ingredients = data["wrong_ingredients"] + data["ingredients"]
     shuffle(ingredients)
     if state == "Success":
@@ -121,6 +149,13 @@ def match_quiz():
     section = request.path.split("/")[1]
     type_ = request.path.split("_")[1]
     state, data = games.match_quiz(section, type_, 4)
+
+    i = 0
+    while state != "Success" and i < 3:
+        db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
+        state, data = games.match_quiz(section, type_, 4)
+        i += 1
+
     names = list(map(lambda x: x["name"], data))
     sections = list(map(lambda x: x["section"], data))
     for i in range(len(names)):
