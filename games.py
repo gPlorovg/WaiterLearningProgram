@@ -227,21 +227,24 @@ def match_quiz(section: str, type_: str, count: int) -> tuple:
                     resp.append({
                         "id": obj.id,
                         "name": obj.name,
-                        "price": obj.price
+                        "price": obj.price,
+                        "section": obj.section
                     })
             case "volume":
                 for obj in obj_list:
                     resp.append({
                         "id": obj.id,
                         "name": obj.name,
-                        "volume": obj.volume
+                        "volume": obj.volume,
+                        "section": obj.section
                     })
             case "serving":
                 for obj in obj_list:
                     resp.append({
                         "id": obj.id,
                         "name": obj.name,
-                        "serving": obj.serving
+                        "serving": obj.serving,
+                        "section": obj.section
                     })
 
     return state, resp
