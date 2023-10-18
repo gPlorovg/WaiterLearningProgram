@@ -30,7 +30,7 @@ function handle_click_outside(event){
         const new_count = parseInt(inp_count.value);
         inp_count.value = "";
         if (1 <= new_count && new_count <= max_count - 1) {
-            window.localStorage["count"] =  inp_count.value - 1;
+            window.localStorage["count"] =  new_count - 1;
             next();
         }
     }
