@@ -77,9 +77,8 @@ function submit() {
     }
     if (!document.querySelector(".wrapper").contains(next_btn)) {
         sub_btn.insertAdjacentElement("afterend", next_btn);
-    } else {
-        next_btn.style.display = "block";
     }
+    next_btn.style.display = "block";
     sub_btn.style.display = "none";
     if (ans_radio === true_radio) {
         ans_radio.setAttribute("style", "background-image: url(\"../static/icons/radio_true_mark.svg\") !important;" +

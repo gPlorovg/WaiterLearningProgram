@@ -74,9 +74,8 @@ function submit() {
     }
     if (!document.querySelector(".wrapper").contains(next_btn)) {
         sub_btn.insertAdjacentElement("afterend", next_btn);
-    } else {
-        next_btn.style.display = "block";
     }
+    next_btn.style.display = "block";
     sub_btn.style.display = "none";
 }
 
