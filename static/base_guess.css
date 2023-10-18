@@ -7,11 +7,11 @@ body {
     font-weight: 400;
     background-color: #D9D9D9;
     color: #1E1E1E;
-    font-size: 56pt;
+    font-size: 48pt;
 }
 
 .wrapper{
-    margin: 10% 20%;
+    margin: 5% 5%;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -24,9 +24,9 @@ body {
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    gap: 50px;
-    font-size: 38pt;
-    margin-top: 100px;
+    gap: 40px;
+    font-size: 28pt;
+    margin-top: 80px;
 }
 
 .radio {
@@ -52,9 +52,9 @@ body {
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    gap: 50px;
-    font-size: 38pt;
-    margin-top: 100px;
+    gap: 40px;
+    font-size: 28pt;
+    margin-top: 80px;
 }
 
 .checkbox {
@@ -86,7 +86,7 @@ body {
     border: 6px solid #1E1E1E;
     border-radius: 14px;
     margin: auto auto 10px auto;
-    font-size: 38pt;
+    font-size: 28pt;
     padding: 15px;
 }
 
@@ -96,7 +96,7 @@ body {
     color: white;
     border-radius: 14px;
     padding: 20px 80px;
-    margin: 140px auto;
+    margin: 100px auto;
 }
 
 .turn_back {

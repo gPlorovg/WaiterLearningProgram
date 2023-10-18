@@ -16,27 +16,27 @@ app = Flask(__name__)
 #     return render_template("index.html")
 
 
-@app.route("/sign_up", methods=["GET", "POST"])
-def sign_up():
-    if request.method == "GET":
-        return render_template("sign_up.html")
-    elif request.method == "POST":
-        req = request.json
-        check_resp = db.check_user(req["email"])
-        if check_resp[1] == 200:
-            resp = db.create_user(User(email=req["email"], name=req["name"], password=req["password"]))
-            if resp[1] == 200:
-                db.commit()
-        else:
-            resp = check_resp
-        return make_response(resp)
+# @app.route("/sign_up", methods=["GET", "POST"])
+# def sign_up():
+#     if request.method == "GET":
+#         return render_template("sign_up.html")
+#     elif request.method == "POST":
+#         req = request.json
+#         check_resp = db.check_user(req["email"])
+#         if check_resp[1] == 200:
+#             resp = db.create_user(User(email=req["email"], name=req["name"], password=req["password"]))
+#             if resp[1] == 200:
+#                 db.commit()
+#         else:
+#             resp = check_resp
+#         return make_response(resp)
 
 
-@app.post("/sign_in")
-def sign_in():
-    req = request.json
-    resp = db.sign_in(name_=req["name"], password_=req["password"])
-    return make_response(resp)
+# @app.post("/sign_in")
+# def sign_in():
+#     req = request.json
+#     resp = db.sign_in(name_=req["name"], password_=req["password"])
+#     return make_response(resp)
 
 
 # @app.get("/main")
@@ -122,6 +122,10 @@ def match_quiz():
     type_ = request.path.split("_")[1]
     state, data = games.match_quiz(section, type_, 4)
     names = list(map(lambda x: x["name"], data))
+    sections = list(map(lambda x: x["section"], data))
+    for i in range(len(names)):
+        names[i] = sections[i] + " || " + names[i]
+
     qualities = list(map(lambda x: x[type_], data))
     shuffle(qualities)
     items = {names[i]: qualities[i] for i in range(len(names))}
