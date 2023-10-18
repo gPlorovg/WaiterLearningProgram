@@ -4,7 +4,7 @@ from Objects import Meal, Drink, Cocktail
 
 
 meals_list = list()
-with open("data/Meals.csv") as f:
+with open("data/Meals.csv", encoding="windows-1251") as f:
     reader = csv.reader(f, delimiter=";")
     count_of_obj_rows = 0
     for row in reader:
@@ -26,7 +26,7 @@ with open("data/Meals.csv") as f:
                 meals_list.append(Meal(name=name, section=section, price=price, serving=serving,
                                        description=description))
                 count_of_obj_rows = 0
-with open("data/Meals_add.csv") as f:
+with open("data/Meals_add.csv", encoding="windows-1251") as f:
     reader = csv.reader(f, delimiter=";")
     section = "Гарниры"
     price = 250
@@ -43,7 +43,7 @@ with open("data/Meals_add.csv") as f:
         meals_list.append(Meal(name=row[0], section=section, price=price, serving=serving, description=description))
 
 drink_list = list()
-with open("data/drinks.csv") as f:
+with open("data/drinks.csv", encoding="windows-1251") as f:
     reader = csv.reader(f, delimiter=";")
     for row in reader:
         if row[0]:
@@ -68,7 +68,7 @@ with open("data/drinks.csv") as f:
 
 imgs = listdir("static/cocktail_img")
 cocktail_list = list()
-with open("data/cocktails.csv") as f:
+with open("data/cocktails.csv", encoding="windows-1251") as f:
     reader = csv.reader(f, delimiter=";")
     for row in reader:
         if row[0]:
