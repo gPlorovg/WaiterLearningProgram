@@ -1,17 +1,17 @@
 # import json
-from os import getenv
+# from os import getenv
 from random import shuffle
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from flask import Flask, render_template, make_response, request
-from db_manage import db
+# from db_manage import db
 # from Objects import User
 import games
 
 
-load_dotenv()
+# load_dotenv()
 # USER = getenv("USER")
-HOST = getenv("HOST")
-DB_PASSWORD = getenv("DB_PASSWORD")
+# HOST = getenv("HOST")
+# DB_PASSWORD = getenv("DB_PASSWORD")
 
 app = Flask(__name__)
 
@@ -78,7 +78,7 @@ def guess_price():
 
     i = 0
     while state != "Success" and i < 3:
-        db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
+        # db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
         state, data = games.guess_price(section)
         i += 1
 
@@ -105,7 +105,7 @@ def guess_serving():
 
     i = 0
     while state != "Success" and i < 3:
-        db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
+        # db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
         state, data = games.guess_serving(section)
         i += 1
 
@@ -125,7 +125,7 @@ def guess_ingredients():
 
     i = 0
     while state != "Success" and i < 3:
-        db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
+        # db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
         state, data = games.guess_ingredients()
         i += 1
 
@@ -152,7 +152,7 @@ def match_quiz():
 
     i = 0
     while state != "Success" and i < 3:
-        db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
+        # db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
         state, data = games.match_quiz(section, type_, 4)
         i += 1
 

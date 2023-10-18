@@ -1,4 +1,4 @@
-from db_manage import db
+# from db_manage import db
 from scan_data import meals_list, drink_list, cocktail_list
 from Objects import Meal, Drink, Cocktail, User
 
