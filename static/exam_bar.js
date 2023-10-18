@@ -8,6 +8,34 @@ next_btn.classList.add("submit_btn");
 next_btn.textContent = "Next";
 next_btn.addEventListener("click", next);
 
+const count_block = document.querySelector(".count");
+
+const max_count = parseInt(count_block.children[2].textContent);
+
+const inp_count_block = document.getElementById("inp_count_block");
+
+const inp_count = document.getElementById("exam_count");
+
+document.addEventListener("click", handle_click_outside);
+
+count_block.addEventListener("click", () => {
+        count_block.style.display = "none";
+        inp_count_block.style.display = "block";
+});
+
+function handle_click_outside(event){
+    if(!inp_count_block.contains(event.target) && !count_block.contains(event.target)) {
+        inp_count_block.style.display = "none";
+        count_block.style.display = "block";
+        const new_count = parseInt(inp_count.value);
+        if (1 <= new_count && new_count <= max_count) {
+            window.localStorage["count"] =  inp_count.value;
+            next();
+        }
+    }
+}
+
+
 const curr_count = document.getElementById("curr_count");
 const section_ = document.getElementById("section");
 const name_ = document.getElementById("name");
