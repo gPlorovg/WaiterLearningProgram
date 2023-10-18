@@ -67,7 +67,7 @@ function submit() {
         } else {
             resp[r.children[0].textContent] = parseInt(r.children[1].children[1].textContent);
         }
-        names_rows[r.children[0].textContent] = r;
+        names_rows[r.children[0].textContent.split(" || ")[1]] = r;
     }
 
     const true_ans = JSON.parse(window.localStorage["true_ans"]);
