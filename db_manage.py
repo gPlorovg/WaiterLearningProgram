@@ -127,6 +127,9 @@ class DataBase:
                 error_print(e)
                 self.connection.rollback()
                 return None
+            except pg.OperationalError as e:
+                self.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
+
             else:
                 return drink
         else:

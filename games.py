@@ -1,52 +1,51 @@
 from random import choice, sample
-from db_manage import db
+# from db_manage import db
+from scan_data import drink_list, cocktail_list, meals_list
+from itertools import chain
 
 
 def get_wrong_ans(section: str, type_: str, true_ans, count: int) -> list:
     resp = list()
-    table = None
+    obj_list = list()
 
     match section:
         case "bar":
-            table = "drinks"
+            obj_list = drink_list
         case "cocktails":
-            table = "cocktails"
+            obj_list = cocktail_list
         case "menu":
-            table = "meals"
+            obj_list = meals_list
 
     match type_:
         case "price":
-            resp = sample([i for i in db.read_all_prices(table) if i != true_ans], count)
+            resp = sample([i for i in [x.price for x in obj_list] if i != true_ans], count)
         case "volume":
-            resp = sample([i for i in db.read_all_volumes(table) if i != true_ans], count)
+            resp = sample([i for i in [x.volume for x in obj_list] if i != true_ans], count)
         case "serving":
-            resp = sample([i for i in db.read_all_serving(table) if i and i != true_ans], count)
+            resp = sample([i for i in [x.serving for x in obj_list] if i and i != true_ans], count)
         case "ingredients":
-            resp = sample([i for i in db.read_all_ingredients(table) if i not in true_ans], count)
+            resp = sample([i for i in list(set(chain.from_iterable([x.ingredients for x in obj_list])))
+                           if i not in true_ans], count)
 
     return resp
 
 
 def guess_price(section: str) -> tuple:
-    id_ = 0
     obj = None
     resp = dict()
     state = "Error"
 
     match section:
         case "bar":
-            id_ = choice(db.all_drinks_id)
-            obj = db.read_drink(id_)
+            obj = choice(drink_list)
         case "cocktails":
-            id_ = choice(db.all_cocktails_id)
-            obj = db.read_cocktail(id_)
+            obj = choice(cocktail_list)
         case "menu":
-            id_ = choice(db.all_meals_id)
-            obj = db.read_meal(id_)
+            obj = choice(meals_list)
     if obj:
         state = "Success"
         resp = {
-            "id": id_,
+            "id": obj.id,
             "section": obj.section,
             "name": obj.name,
             "price": obj.price,
@@ -62,10 +61,9 @@ def generate_exam(section: str) -> tuple:
 
     match section:
         case "bar":
-            for id_ in db.all_drinks_id:
-                obj = db.read_drink(id_)
+            for obj in drink_list:
                 resp.append({
-                    "id": id_,
+                    "id": obj.id,
                     "section": obj.section,
                     "name": obj.name,
                     "price": obj.price,
@@ -75,10 +73,9 @@ def generate_exam(section: str) -> tuple:
                     "wrong_serving": get_wrong_ans(section, "serving", obj.serving, 3)
                 })
         case "cocktails":
-            for id_ in db.all_cocktails_id:
-                obj = db.read_cocktail(id_)
+            for obj in cocktail_list:
                 resp.append({
-                    "id": id_,
+                    "id": obj.id,
                     "section": obj.section,
                     "name": obj.name,
                     "img_path": obj.img_path,
@@ -87,10 +84,9 @@ def generate_exam(section: str) -> tuple:
                     "wrong_ingredients": get_wrong_ans(section, "ingredients", obj.ingredients, 3)
                 })
         case "menu":
-            for id_ in db.all_meals_id:
-                obj = db.read_meal(id_)
+            for obj in meals_list:
                 resp.append({
-                    "id": id_,
+                    "id": obj.id,
                     "section": obj.section,
                     "name": obj.name,
                     "description": obj.description,
@@ -105,74 +101,70 @@ def generate_exam(section: str) -> tuple:
     return state, resp
 
 
-def mistakes(section: str, mistake_id: int) -> tuple:
-    resp = dict()
-    state = "Error"
-
-    match section:
-        case "bar":
-            obj = db.read_drink(mistake_id)
-            resp = {
-                "id": mistake_id,
-                "section": obj.section,
-                "name": obj.name,
-                "price": obj.price,
-                "volume": obj.volume,
-                "wrong_volumes": get_wrong_ans(section, "volume", obj.volume, 3),
-                "serving": obj.serving,
-                "wrong_serving": get_wrong_ans(section, "serving", obj.serving, 3)
-            }
-        case "cocktails":
-            obj = db.read_cocktail(mistake_id)
-            resp = {
-                "id": mistake_id,
-                "section": obj.section,
-                "name": obj.name,
-                "img_path": obj.img_path,
-                "price": obj.price,
-                "ingredients": obj.ingredients,
-                "wrong_ingredients": get_wrong_ans(section, "ingredients", obj.ingredients, 3)
-            }
-        case "menu":
-            obj = db.read_meal(mistake_id)
-            resp = {
-                "id": mistake_id,
-                "section": obj.section,
-                "name": obj.name,
-                "description": obj.description,
-                "price": obj.price,
-                "serving": obj.serving,
-                "wrong_serving": get_wrong_ans(section, "serving", obj.serving, 3)
-            }
-
-    if resp:
-        state = "Success"
-
-    return state, resp
+# def mistakes(section: str, mistake_id: int) -> tuple:
+#     resp = dict()
+#     state = "Error"
+#
+#     match section:
+#         case "bar":
+#             obj = db.read_drink(mistake_id)
+#             resp = {
+#                 "id": mistake_id,
+#                 "section": obj.section,
+#                 "name": obj.name,
+#                 "price": obj.price,
+#                 "volume": obj.volume,
+#                 "wrong_volumes": get_wrong_ans(section, "volume", obj.volume, 3),
+#                 "serving": obj.serving,
+#                 "wrong_serving": get_wrong_ans(section, "serving", obj.serving, 3)
+#             }
+#         case "cocktails":
+#             obj = db.read_cocktail(mistake_id)
+#             resp = {
+#                 "id": mistake_id,
+#                 "section": obj.section,
+#                 "name": obj.name,
+#                 "img_path": obj.img_path,
+#                 "price": obj.price,
+#                 "ingredients": obj.ingredients,
+#                 "wrong_ingredients": get_wrong_ans(section, "ingredients", obj.ingredients, 3)
+#             }
+#         case "menu":
+#             obj = db.read_meal(mistake_id)
+#             resp = {
+#                 "id": mistake_id,
+#                 "section": obj.section,
+#                 "name": obj.name,
+#                 "description": obj.description,
+#                 "price": obj.price,
+#                 "serving": obj.serving,
+#                 "wrong_serving": get_wrong_ans(section, "serving", obj.serving, 3)
+#             }
+#
+#     if resp:
+#         state = "Success"
+#
+#     return state, resp
 
 
 def guess_serving(section: str) -> tuple:
-    id_ = 0
     obj = None
     resp = dict()
     state = "Error"
 
     match section:
         case "bar":
-            id_ = choice(db.all_drinks_id)
-            obj = db.read_drink(id_)
+            obj = choice(drink_list)
         case "menu":
-            id_ = choice(db.all_meals_id)
-            obj = db.read_meal(id_)
+            obj = choice(meals_list)
             if obj:
                 while not obj.serving:
-                    id_ = choice(db.all_meals_id)
-                    obj = db.read_meal(id_)
+                    obj = choice(meals_list)
 
     if obj:
         state = "Success"
         resp = {
-            "id": id_,
+            "id": obj.id,
             "section": obj.section,
             "name": obj.name,
             "serving": obj.serving,
@@ -186,13 +178,12 @@ def guess_ingredients() -> tuple:
     resp = dict()
     state = "Error"
 
-    id_ = choice(db.all_cocktails_id)
-    obj = db.read_cocktail(id_)
+    obj = choice(cocktail_list)
 
     if obj:
         state = "Success"
         resp = {
-            "id": id_,
+            "id": obj.id,
             "section": obj.section,
             "name": obj.name,
             "ingredients": obj.ingredients,
@@ -210,14 +201,11 @@ def match_quiz(section: str, type_: str, count: int) -> tuple:
 
     match section:
         case "bar":
-            id_list = sample(db.all_drinks_id, count)
-            obj_list = map(db.read_drink, id_list)
+            obj_list = sample(drink_list, count)
         case "cocktails":
-            id_list = sample(db.all_cocktails_id, count)
-            obj_list = map(db.read_cocktail, id_list)
+            obj_list = sample(cocktail_list, count)
         case "menu":
-            id_list = sample(db.all_meals_id, count)
-            obj_list = map(db.read_meal, id_list)
+            obj_list = sample(meals_list, count)
 
     if obj_list:
         state = "Success"
