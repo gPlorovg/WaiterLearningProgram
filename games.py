@@ -190,7 +190,9 @@ def guess_ingredients() -> tuple:
             "wrong_ingredients": get_wrong_ans("cocktails", "ingredients", obj.ingredients, 4),
             "img_path": obj.img_path
         }
-
+    print("GAMES")
+    print(obj.img_path)
+    print(resp)
     return state, resp
 
 
