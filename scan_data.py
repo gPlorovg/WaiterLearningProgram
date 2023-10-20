@@ -66,7 +66,11 @@ with open("data/drinks.csv", encoding="windows-1251") as f:
                         drink_list.append(Drink(name=name, section=section, price=price, serving=serving,
                                                 volume=volume))
 
-imgs = listdir("static/cocktail_img")
+cocktail_img_paths = list()
+with open("static/cocktail_img/cocktail_list") as f:
+    for i in listdir("static/cocktail_img"):
+        cocktail_img_paths.append(f.readline().rstrip("\n"))
+
 cocktail_list = list()
 with open("data/cocktails.csv", encoding="windows-1251") as f:
     reader = csv.reader(f, delimiter=";")
@@ -80,6 +84,6 @@ with open("data/cocktails.csv", encoding="windows-1251") as f:
                 serving = row[3]
                 volume = int(row[4].rstrip(" мл"))
                 price = int(row[5].rstrip(" р."))
-                img_path = imgs.pop(0)
+                img_path = cocktail_img_paths.pop(0)
                 cocktail_list.append(Cocktail(name=name, section=section, price=price, serving=serving,
                                               ingredients=ingredients, img_path=img_path, volume=volume))

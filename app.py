@@ -123,7 +123,7 @@ def guess_serving():
 def guess_ingredients():
     state, data = games.guess_ingredients()
     print(data)
-    i = 0
+    # i = 0
     # while state != "Success" and i < 3:
         # db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
         # state, data = games.guess_ingredients()
