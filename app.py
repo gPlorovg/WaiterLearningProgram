@@ -76,11 +76,11 @@ def guess_price():
     section = request.path.split("/")[1]
     state, data = games.guess_price(section)
 
-    i = 0
-    while state != "Success" and i < 3:
+    # i = 0
+    # while state != "Success" and i < 3:
         # db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
-        state, data = games.guess_price(section)
-        i += 1
+        # state, data = games.guess_price(section)
+        # i += 1
 
     prices = data["wrong_prices"]
     prices.append(data["price"])
@@ -103,11 +103,11 @@ def guess_serving():
     section = request.path.split("/")[1]
     state, data = games.guess_serving(section)
 
-    i = 0
-    while state != "Success" and i < 3:
+    # i = 0
+    # while state != "Success" and i < 3:
         # db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
-        state, data = games.guess_serving(section)
-        i += 1
+        # state, data = games.guess_serving(section)
+        # i += 1
 
     serving = data["wrong_serving"]
     serving.append(data["serving"])
@@ -124,10 +124,10 @@ def guess_ingredients():
     state, data = games.guess_ingredients()
 
     i = 0
-    while state != "Success" and i < 3:
+    # while state != "Success" and i < 3:
         # db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
-        state, data = games.guess_ingredients()
-        i += 1
+        # state, data = games.guess_ingredients()
+        # i += 1
 
     ingredients = data["wrong_ingredients"] + data["ingredients"]
     shuffle(ingredients)
@@ -150,11 +150,11 @@ def match_quiz():
     type_ = request.path.split("_")[1]
     state, data = games.match_quiz(section, type_, 4)
 
-    i = 0
-    while state != "Success" and i < 3:
+    # i = 0
+    # while state != "Success" and i < 3:
         # db.refresh_conn("WaiterLearningProgram_db", "WaiterLearningProgram", HOST, DB_PASSWORD)
-        state, data = games.match_quiz(section, type_, 4)
-        i += 1
+        # state, data = games.match_quiz(section, type_, 4)
+        # i += 1
 
     names = list(map(lambda x: x["name"], data))
     sections = list(map(lambda x: x["section"], data))
